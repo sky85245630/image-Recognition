@@ -1,0 +1,254 @@
+/*!
+ * Start Bootstrap - Blog Home (https://startbootstrap.com/template-overviews/blog-home)
+ * Copyright 2013-2019 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-blog-home/blob/master/LICENSE)
+ */
+body {
+    padding-top: 67px;
+    font-family: 微軟正黑體;
+}
+
+.logo {
+    padding: 10px 0;
+    width: 150px;
+}
+
+.nav-link {
+    color: #00d1fe;
+    ;
+}
+
+.white {
+    color: white;
+}
+
+@media (min-width: 992px) {
+    /*.nav-item:not(.active){
+	border-left: 1px solid white;
+	}*/
+
+    .navbar-expand-lg .navbar-nav .nav-link {
+        padding-right: .8rem;
+        padding-left: .8rem;
+    }
+
+}
+
+@media (min-width: 992px) {
+    .navbar-expand-lg .navbar-collapse {
+        display: none !important;
+    }
+}
+
+@media (max-width:1200px) {
+    .carousel-item {
+        height: 50vh;
+        min-height: 276px;
+        background: no-repeat center center scroll;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        margin-top: 75px;
+    }
+
+    ul.drop-down-menu a {
+        background-color: #000;
+        color: #fff;
+        display: block;
+        padding: 6px 24px !important;
+        text-decoration: none;
+        line-height: 40px;
+    }
+}
+
+@media (max-width: 991px) {
+    .banner_lg {
+        display: none;
+    }
+
+    #menu {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {}
+
+
+.navbar-toggler-icon {
+    line-height: initial;
+}
+
+.navbar-toggler {
+    border: 1px solid #acacac;
+
+}
+
+/*menu列*/
+#menu {
+    background: black;
+    height: 60px;
+    /*position: absolute;*/
+    z-index: 999;
+    width: 100%;
+    /*z-index: 1030;
+        width: 100%;*/
+}
+
+ul {
+    /* 取消ul預設的內縮及樣式 */
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.drop-down-menu li {
+    border: 0px solid black;
+}
+
+ul.drop-down-menu {
+    border: #ccc 1px solid;
+    display: inline-block;
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-size: 13px;
+    border: 0px solid black;
+}
+
+ul.drop-down-menu li {
+    position: relative;
+    white-space: nowrap;
+    border-right: #ccc 1px solid;
+}
+
+ul.drop-down-menu>li:last-child {
+    border-right: none;
+}
+
+ul.drop-down-menu>li {
+    float: left;
+    /* 只有第一層是靠左對齊*/
+    border: 0px solid white;
+    font-size: 16px;
+    font-family: 微軟正黑體;
+
+}
+
+ul.drop-down-menu a {
+    background-color: black;
+    color: white;
+    display: block;
+    padding: 14px 32px 0;
+    text-decoration: none;
+    line-height: 47px;
+
+}
+
+ul.drop-down-menu a:hover {
+    /* 滑鼠滑入按鈕變色*/
+    background-color: #54c3f1;
+    color: #fff;
+}
+
+ul.drop-down-menu li:hover>a {
+    /* 滑鼠移入次選單上層按鈕保持變色*/
+    background-color: #54c3f1;
+    color: #fff;
+    transition-duration: 500ms;
+}
+
+ul.drop-down-menu ul {
+    border: #ccc 1px solid;
+    position: absolute;
+    z-index: 99;
+    left: -1px;
+    top: 100%;
+    min-width: 180px;
+    border: 0px solid black;
+}
+
+ul.drop-down-menu ul li {
+    border-bottom: #ccc 1px solid;
+}
+
+ul.drop-down-menu ul li:last-child {
+    border-bottom: none;
+}
+
+ul.drop-down-menu ul ul {
+    /*第三層以後的選單出現位置與第二層不同*/
+    z-index: 999;
+    top: 10px;
+    left: 90%;
+}
+
+ul.drop-down-menu ul {
+    /*隱藏次選單*/
+    display: none;
+}
+
+ul.drop-down-menu li:hover>ul {
+    /* 滑鼠滑入展開次選單*/
+    display: block;
+}
+
+/*end menu列*/
+
+.center {
+    text-align: center;
+}
+
+.navbar-nav .nav-link {
+    color: black;
+}
+
+
+ul li a {
+    color: white;
+}
+
+ul li a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.lg_col_padding {
+    padding: 30px 0;
+}
+
+.sm_row_margin {
+    margin: 0 10px;
+}
+
+
+.character tr th,
+.character tr td {
+    vertical-align: middle;
+}
+
+.recognition_result {
+    line-height: 1.8;
+}
+
+.result_btn {
+    padding: .065rem .75rem;
+}
+
+.table td {
+    padding: 1.25rem;
+}
+
+.definition_table tr th, .definition_table tr td {
+    vertical-align: middle;
+    /* text-align: center; */
+}
+
+.definition_table tbody tr:hover {
+    color: #212529;
+    background-color: rgba(236, 42, 42, 0.075);
+}
+
+.definition_table_notion{
+    color: red;
+    text-align: center;
+    font-size: 18px;
+}

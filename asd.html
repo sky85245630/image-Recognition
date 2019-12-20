@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <title>圖像辨識</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/IR.css" rel="stylesheet" />
+    <link href="css/aos.css" rel="stylesheet" />
+    <link href="css/font-awesome.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <nav
+      class="navbar navbar-expand-lg navbar-white bg-white fixed-top"
+      style="position: absolute;"
+    >
+      <div class="container">
+        <img class="logo" src="img/ibuzz_logo.png" />
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarResponsive"
+          aria-controls="navbarResponsive"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon">≡</span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="">AIE應用</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">商用報告應用</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">帳號管理</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- <div class="banner_lg">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="https://www.i-buzz.com.tw">首頁
+              </a>
+            </li>
+            <li class="nav-item" >
+              <a class="nav-link" href="#">產品與解決方案</a>
+            </li>
+            <li class="nav-item" >
+              <a class="nav-link" href="#">AI4Biz</a>
+            </li>
+            <li class="nav-item" >
+              <a class="nav-link" href="#">技術部落格</a>
+            </li>
+          </ul>
+        </div> -->
+      </div>
+    </nav>
+
+    <div id="menu">
+      <div class="container">
+        <ul class="drop-down-menu">
+          <li>
+            <a href="#">AIE應用</a>
+          </li>
+          <li>
+            <a href="#">商用報告應用</a>
+          </li>
+          <li>
+            <a href="#">帳號管理</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div id="app">
+        <h4>物件寫法</h4>
+        <div class="box" :class="{'rotate':isTransform,'bg-danger':boxColor}"></div>
+        <p>請為此元素加上動態 className</p>
+        <hr>
+        <button class="btn btn-outline-primary" v-on:click="isTransform = !isTransform">選轉物件</button>
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="classToggle1" v-model="boxColor">
+          <label class="form-check-label" for="classToggle1">切換色彩</label>
+        </div>
+      </div>	
+      
+
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="row center white">
+        <div class="col-md-12">
+          Copyright @ 2019 i-Buzz Research Inc. All rights reserved
+        </div>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/aos.js"></script>
+    <script src="js/fontAwesome.js"></script>
+    <script src="js/vue.js"></script>
+    
+      
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                isTransform: false,
+                boxColor: false			
+            },
+        });
+        </script>
+  </body>
+</html>
