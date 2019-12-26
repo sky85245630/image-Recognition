@@ -235,6 +235,7 @@ ul li a:hover {
 
 .table td {
     padding: 1.25rem;
+    vertical-align: middle;
 }
 
 .definition_table tr th, .definition_table tr td {
@@ -252,3 +253,52 @@ ul li a:hover {
     text-align: center;
     font-size: 18px;
 }
+
+table tbody tr th{
+    vertical-align: middle;
+}
+
+.user_data_input{
+    height: calc(1.1em + 0.75rem );
+    padding: .375rem .75rem;
+    font-size: .9rem;
+    font-weight: 400;
+    line-height: 1.3;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.edit_personal_data{
+    text-align: center; 
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    padding: 1rem;
+    border-bottom-right-radius: .3rem;
+    border-bottom-left-radius: .3rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

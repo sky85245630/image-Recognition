@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <title>圖像辨識</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/IR.css" rel="stylesheet" />
+    <link href="css/aos.css" rel="stylesheet" />
+    <link href="css/font-awesome.css" rel="stylesheet" />
+    <link href="css/ekko-lightbox.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <nav
+      class="navbar navbar-expand-lg navbar-white bg-white fixed-top"
+      style="position: absolute;"
+    >
+      <div class="container">
+        <img class="logo" src="img/ibuzz_logo.png" />
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarResponsive"
+          aria-controls="navbarResponsive"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon">≡</span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="index.html">AIE應用</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">商用報告應用</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="account.html">帳號管理</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div id="menu">
+      <div class="container">
+        <ul class="drop-down-menu">
+          <li>
+            <a href="index.html">AIE應用</a>
+          </li>
+          <li>
+            <a href="#">商用報告應用</a>
+          </li>
+          <li>
+            <a href="account.html">帳號管理</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container mb-5 mt-2">
+      <div class="row py-4">
+        <div class="col-sm-12">
+          <h1 style="display: inline;">帳號管理</h1>
+          <button
+            class="btn btn-info col-sm-1 float-right"
+            data-toggle="modal"
+            data-target="#addAccount"
+          >
+            新增帳號
+          </button>
+        </div>
+
+        <div class="modal fade" id="addAccount">
+          <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">新增帳號</h5>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="card bg-light">
+                  <article class="card-body mx-auto" style="max-width: 400px;">
+                    <h4 class="card-title mt-3 text-center"></h4>
+                    <form>
+                      <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="fa fa-user-circle"></i>
+                          </span>
+                        </div>
+                        <input
+                          name=""
+                          class="form-control"
+                          placeholder="請輸入使用者名稱"
+                          type="text"
+                          required="required"
+                        />
+                      </div>
+                      <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="fa fa-envelope"></i>
+                          </span>
+                        </div>
+                        <input
+                          name=""
+                          class="form-control"
+                          placeholder="請輸入電子信箱"
+                          type="email"
+                          required="required"
+                        />
+                      </div>
+
+                      <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="fa fa-user"></i>
+                          </span>
+                        </div>
+                        <input
+                          name=""
+                          class="form-control"
+                          placeholder="請輸入帳號"
+                          type="text"
+                          required="required"
+                        />
+                      </div>
+
+                      <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="fa fa-lock"></i>
+                          </span>
+                        </div>
+                        <input
+                          id="input1"
+                          class="form-control"
+                          placeholder="請輸入密碼"
+                          type="password"
+                          required="required"
+                        />
+                      </div>
+                      <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="fa fa-lock"></i>
+                          </span>
+                        </div>
+                        <input
+                          id="input2"
+                          class="form-control"
+                          placeholder="請重新輸入密碼"
+                          type="password"
+                          required="required"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <button
+                          onclick="check()"
+                          type="submit"
+                          class="btn btn-primary btn-block"
+                        >
+                          新增帳號
+                        </button>
+                      </div>
+                    </form>
+                  </article>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <table class="table table-striped center align-middle">
+          <thead>
+            <tr>
+              <th scope="col">姓名</th>
+              <th scope="col">帳號</th>
+              <th scope="col">信箱</th>
+              <th scope="col">最後上線時間</th>
+              <th scope="col">動作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th class="align-middle" scope="row">OPAL</th>
+              <td>OPAL</td>
+              <td>a1234@gmail.com</td>
+              <td>2019-12-23 12:17</td>
+              <td>
+                <button
+                  type="button"
+                  data-toggle="modal"
+                  data-target="#account_data"
+                  class="btn btn-primary btn-sm mx-2"
+                >
+                  <i class="far fa-edit"></i> 編輯
+                </button>
+
+                <div class="modal fade" id="account_data" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                          編輯個人資料
+                        </h5>
+                        <button
+                          type="button"
+                          class="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div
+                        class="modal-body"
+                        style="text-align: left;padding: 1rem 3rem;line-height: 2.2;"
+                      >
+                        帳號：OPAL<br />
+                        姓名：<input
+                          class="user_data_input mb-2"
+                          type="text"
+                          placeholder="OPAL"
+                          name="name"
+                        /><br />
+                        密碼：<input
+                          class="user_data_input mb-2"
+                          type="password"
+                          placeholder="請輸入密碼"
+                          name="password"
+                        />
+                        <br />
+                        權限：<select class="btn btn-mini result_btn">
+                          <option>一般使用者</option>
+                          <option>管理者</option>
+                        </select>
+                        <br />
+                        狀態： <input name="status" type="radio" checked> 啟用 &nbsp;&nbsp;<input name="status" type="radio"> 停用<br />
+                        最後上線時間： 2019-12-25 12:25:56<br />
+                        更新紀錄： 2019-12-12 12:22:55-johnny-建立帳號
+                      </div>
+                      <div class="edit_personal_data">
+                        
+                      <button type="button" class="btn btn-md px-3 btn-success">
+                        儲存
+                      </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <button type="button" class="btn btn-danger btn-sm mx-2">
+                  <i class="far fa-trash-alt"></i> 刪除
+                </button>
+              </td>
+            </tr>
+            <!-- <tr>
+              <th class="align-middle" scope="row">嘉希</th>
+              <td>jeacy</td>
+              <td>normal</td>
+              <td>2019-12-23 12:17</td>
+
+              <td>
+                <button type="button" class="btn btn-primary btn-sm mx-2">
+                  <i class="far fa-edit"></i>編輯
+                </button>
+                <button type="button" class="btn btn-danger btn-sm mx-2">
+                  <i class="far fa-trash-alt"></i>刪除
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th class="align-middle" scope="row">麥口	</th>
+              <td>lazybird</td>
+              <td>normal</td>
+              <td>2019-12-23 12:17</td>
+              <td>
+                <button type="button" class="btn btn-primary btn-sm mx-2">
+                  <i class="far fa-edit"></i>編輯
+                </button>
+                <button type="button" class="btn btn-danger btn-sm mx-2">
+                  <i class="far fa-trash-alt"></i>刪除
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th class="align-middle" scope="row">tony</th>
+              <td>tony</td>
+              <td>admin</td>
+              <td>2019-12-23 12:17</td>
+              <td>
+                <button type="button" class="btn btn-primary btn-sm mx-2">
+                  <i class="far fa-edit"></i>編輯
+                </button>
+                <button type="button" class="btn btn-danger btn-sm mx-2">
+                  <i class="far fa-trash-alt"></i>刪除
+                </button>
+              </td>
+            </tr> -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="container my-5"></div>
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="row center white">
+        <div class="col-md-12">
+          Copyright @ 2019 i-Buzz Research Inc. All rights reserved
+        </div>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/aos.js"></script>
+    <script src="js/fontAwesome.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/ekko-lightbox.min.js"></script>
+
+    <script></script>
+    <script>
+      $("#addAccount").on("shown.bs.modal", function() {
+        $("#myInput").trigger("focus");
+      });
+
+      function check() {
+        with (document.all) {
+          if (input1.value != input2.value) {
+            alert("密碼請輸入一致");
+          }
+        }
+      }
+    </script>
+    <script></script>
+  </body>
+</html>
