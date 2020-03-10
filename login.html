@@ -7,7 +7,7 @@
     <title>登入</title>
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/IR.css" rel="stylesheet" />
-    <link href="css/fontAwesome.css" rel="stylesheet" />
+    <!-- <link href="css/fontAwesome.css" rel="stylesheet" /> -->
     <link href="css/login.css" rel="stylesheet" />
   </head>
   <body style="background-image: url(img/bg-01.jpg);">
@@ -28,19 +28,19 @@
           <div class="sign-in-htm">
             <div class="group">
               <label for="user" class="label">使用者名稱</label>
-              <input id="user" type="text" class="input" />
+              <input id="username" type="text" class="input" />
             </div>
             <div class="group">
               <label for="pass" class="label">密碼</label>
               <input
-                id="pass"
+                id="password"
                 type="password"
                 class="input"
                 data-type="password"
               />
             </div>
             <div class="group">
-              <input type="submit" class="button" value="登入" />
+              <input id="login" type="submit" class="button" value="登入" />
             </div>
             <div class="hr"></div>
           </div>
@@ -52,4 +52,26 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/fontAwesome.js"></script>
   </body>
+
+  <script>
+
+    $("#login").click(function() {
+      var result = $.ajax({
+        url: "http://3.0.202.119:8080/api/v2/login",
+        type: "POST",
+        data: { userid: $("#username").val(), userpwd: $("#password").val() },
+        error: function(xhr) {
+          alert("帳號或密碼錯誤");
+        },
+        success: function(data) {
+          console.log(data);
+          localStorage.setItem("innerTool_token", data.token);
+          // localStorage.setItem("owner_id", data.owner_id);
+          // localStorage.setItem("is_admin", data.is_admin);
+          window.location.href = "index.html";
+        }
+      });
+      // console.log(result);
+    });
+  </script>
 </html>
