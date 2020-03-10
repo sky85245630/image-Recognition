@@ -169,14 +169,54 @@
             <button class="btn btn-danger col-sm-2 float-right">
               匯出人物校正照片
             </button>
-            <div class="col-sm-3 float-right">
-              <select id="inputState" class="form-control">
-                <option selected disabled>選擇資料集</option>
-                <option>2020/01/20</option>
-                <option>2020/01/27</option>
-                <option>2020/02/20</option>
-                <option>2020/02/27</option>
-              </select>
+            <!-- 設定時間區間等 -->
+            <div class="col-sm-2 float-right text-center">
+              <button type="button" class="btn btn-info" data-toggle="modal" data-target="#set_character_data">
+                設定時間區間
+              </button>
+              <!-- 設定時間區間等Modal -->
+              <div class="modal fade" id="set_character_data">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">設定時間區間</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <table class="table table-borderless" style="vertical-align: middle;">
+                        <tbody>
+                          <tr>
+                            <th class="align-middle" scope="row">開始時間</th>
+                            <td><input id="character_start_date" type="date"></td>
+                          </tr>
+                          <tr>
+                            <th class="align-middle" scope="row">結束時間</th>
+                            <td><input id="character_end_time" type="date"></td>
+                          </tr>
+                          <tr>
+                            <th class="align-middle" scope="row">顯示</th>
+                            <td>
+                              <input type="radio" name="modify_status" value="false">未辨識的資料<br>
+                              <input type="radio" name="modify_status" value="true">已辨識的資料
+                              <!-- 查詢頁數 -->
+                              <input type="hidden" name="page_num" value="1">
+                            </td>
+                          </tr>
+                          
+                          
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-primary">查詢</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <!-- /設定時間區間等 -->
+
             </div>
           </div>
           <!-- /人物物件校正 -->
