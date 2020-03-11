@@ -104,7 +104,7 @@ var local_character_start_date = localStorage.getItem('character_start_date')
 var local_character_end_time = localStorage.getItem('character_end_time')
 var local_modify_status = localStorage.getItem('modify_status') =="true"?true:false
 
-var ZZ = JSON.stringify({
+var storage = JSON.stringify({
   start_date: local_character_start_date,
   end_date: local_character_end_time,
   modify_status: local_modify_status,
@@ -118,7 +118,7 @@ $.ajax({
   headers: {
     Authorization: "Bearer " + jwt
   },
-  data: ZZ,
+  data: storage,
   contentType: "application/json; charset=utf-8",
   error: function(xhr) {
     console.log("傳送人物校正時間區間失敗");
@@ -126,30 +126,6 @@ $.ajax({
   },
   success: function(data) {
     
-  //   //取得生活風格列表
-  //   function lifestyle(){
-  //     $.ajax({
-  //       url:"http://api.i-buzz.com.tw/img-recognition/lifestyle_list",
-  //       type:"GET",
-  //       headers:{
-  //           Authorization: "Bearer " + jwt
-  //       },
-  //       error:function(xhr){
-  //         console.log("取得生活風格列表失敗");
-  //         console.log(xhr)
-  
-  //       },
-  //       success:function(data){
-  //         console.log("取得生活風格列表成功");
-  //         // console.log(data.lifestyle_list[1]);
-  //         // console.log(data.lifestyle_list.length)
-  //         for ( i=0 ; i < data.lifestyle_list.length ; i++){
-  //             QQ = '<option name="' + data.lifestyle_list[i] + '" value="' + data.lifestyle_list[i] + '">' + data.lifestyle_list[i] + '</option>'
-  //         }
-  //       }
-  //     })
-  //   return QQ.toString()
-  // }
     console.log("傳送人物校正時間區間成功");
     // console.log(data.character_style[1]);
     console.log(data);
