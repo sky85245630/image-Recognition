@@ -202,7 +202,6 @@ $.ajax({
     console.log("傳送人物校正時間區間成功");
     // console.log(data.character_style[1]);
     console.log(data);
-    console.log(data.data[0].kol_id);
     total = '<p >共 5 / '+ data.count +'</p>';
         console.log(total);
         $('.total').append(total);
@@ -415,11 +414,13 @@ $.ajax({
             localStorage.setItem("character_start_date", character_start_date);
             localStorage.setItem("character_end_time", character_end_time);
             localStorage.setItem("modify_status", modify_status);
-            $('.total').append(total);
             // console.log(data.character_style[1]);
             console.log(data);
-            console.log(data.data[0].kol_id);
+            // console.log(data.data[0].kol_id);
             $("#character").empty();
+            $(".total").empty();
+            $('.total').append(total);
+
             for (i = 0; i < data.data.length; i++) {
               character =
                 "<tr> <td>" +
