@@ -115,6 +115,67 @@ function character_style() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //拉出local Storage資料顯示在畫面上CHARACTER
 
 var storage = JSON.stringify({
@@ -180,7 +241,6 @@ $.ajax({
 
     $(".btn-success").click(function() {
 
-
         var send_character_style = $(this).parent().parent().find('#character_style option:selected').val();
         var send_life_style = $(this).parent().parent().find('#life_style option:selected').val();
         var send_character_gender = $(this).parent().parent().find('#character_gender option:selected').val();
@@ -221,6 +281,51 @@ $.ajax({
 });
 
 //結束拉出local Storage資料顯示在畫面上CHARACTER
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -275,7 +380,6 @@ $.ajax({
 
       //設定人物校正時間區間
       $("#character_search").click(function() {
-        alert("character_search");
         var character_start_date = $("#character_start_date").val();
         var character_end_time = $("#character_end_time").val();
         var modify_status =
@@ -306,6 +410,12 @@ $.ajax({
           },
           success: function(data) {
             console.log("傳送人物校正時間區間成功OOOOO");
+            total = '<p >共 5 / '+ data.count +'</p>';
+            console.log(total);
+            localStorage.setItem("character_start_date", character_start_date);
+            localStorage.setItem("character_end_time", character_end_time);
+            localStorage.setItem("modify_status", modify_status);
+            $('.total').append(total);
             // console.log(data.character_style[1]);
             console.log(data);
             console.log(data.data[0].kol_id);
@@ -346,9 +456,7 @@ $.ajax({
            
 
 
-            localStorage.setItem("character_start_date", character_start_date);
-            localStorage.setItem("character_end_time", character_end_time);
-            localStorage.setItem("modify_status", modify_status);
+            
             $("#set_character_data").modal("toggle");
             // window.location.reload();
 

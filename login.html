@@ -54,6 +54,38 @@
   </body>
 
   <script>
+    
+var login = JSON.stringify({
+  "username": "img_recognition",
+  "password": "Ryndz@B3uP"
+});
+
+  //圖像辨識token
+$.ajax({
+  url: "http://18.139.219.48/img-recognition/login",
+  type: "POST",
+  data: login,
+  // headers: {
+  //     Authorization: "Bearer " + jwt
+  // },
+  contentType: "application/json; charset=utf-8",
+  error: function (xhr) {
+    alert("登入失敗");
+    console.log(xhr);
+    //   console.log(typeof(JSON.parse({
+    //     "username":"img_recognition",
+    //     "password":"Ryndz@B3uP"
+    // })));
+  },
+  success: function (data) {
+    console.log(data);
+    console.log('登入成功');
+    //   alert('OO');
+    localStorage.setItem('token', data.access_token);
+    //   window.location.href="index.html";
+  }
+});
+
 
     $("#login").click(function() {
       var result = $.ajax({
@@ -70,6 +102,8 @@
           // localStorage.setItem("is_admin", data.is_admin);
           window.location.href = "index.html";
         }
+
+        
       });
       // console.log(result);
     });
