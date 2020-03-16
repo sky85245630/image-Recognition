@@ -85,16 +85,15 @@
 
     /* /RWD Table */
 
-
     .ellipsis {
-overflow:hidden;
-white-space: nowrap;
-text-overflow: ellipsis;
-display: -webkit-box;
--webkit-line-clamp: 2;
--webkit-box-orient: vertical;
-white-space: normal;
-}
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      white-space: normal;
+    }
   </style>
   <body>
     <!-- Navigation -->
@@ -383,7 +382,7 @@ white-space: normal;
                 </td>
 
                 <td>
-                  <button type="button" class="btn btn-success">儲存</button>
+                  <button id="BTN" type="button" class="btn btn-success">儲存</button>
                 </td>
               </tr> -->
               <!-- <tr>
@@ -422,14 +421,24 @@ white-space: normal;
             </tbody>
           </table>
           <!-- 定義描述 -->
-          <button
-            type="button"
-            class="btn btn-warning"
-            data-toggle="modal"
-            data-target="#definition"
-          >
-            定義描述＋
-          </button>
+          <div class="row">
+            <div class="col-md-4">
+              <button
+              type="button"
+              class="btn btn-warning"
+              data-toggle="modal"
+              data-target="#definition"
+            >
+              定義描述＋
+            </button>
+            </div>
+            <div class="col-md-4 text-center total">
+               
+            </div>
+            <div class="col-md-4 text-right">
+              <button id="character_nextPage" type="button" class="btn btn-primary">下一頁</button>
+            </div>
+          </div>
           <div
             class="modal fade"
             id="definition"
@@ -816,17 +825,15 @@ white-space: normal;
           <table class=" rwd-table table table-borderless center">
             <thead>
               <tr>
-                <th scope="col">PIC_ID</th>
                 <th scope="col">KOL_ID</th>
                 <th scope="col">圖片</th>
                 <th scope="col">照片風格</th>
-                <th scope="col">辨識結果</th>
-                <th scope="col">定義</th>
+                <th scope="col">辨識結果RGB</th>
                 <th scope="col">修正結果</th>
               </tr>
             </thead>
-            <tbody class="character">
-              <tr>
+            <tbody id="color" class="character">
+              <!-- <tr>
                 <th scope="row">A001</th>
                 <td>滴妹</td>
                 <td>
@@ -861,10 +868,9 @@ white-space: normal;
                 <td>
                   <button type="button" class="btn btn-success">儲存</button>
                 </td>
-              </tr>
-              <tr>
+              </tr> -->
+              <!-- <tr>
                 <th scope="row">A002</th>
-                <td>風景</td>
                 <td>
                   <a href="img/d.jpg" data-toggle="lightbox">
                     <img
@@ -897,7 +903,7 @@ white-space: normal;
                 <td>
                   <button type="button" class="btn btn-success">儲存</button>
                 </td>
-              </tr>
+              </tr> -->
             </tbody>
           </table>
 
@@ -1038,65 +1044,184 @@ white-space: normal;
         $(this).ekkoLightbox();
       });
     </script>
+    
     <script>
+      var jwt = localStorage.getItem('token');
+      var ip = "http://54.254.175.67";
+
+      // //設定人物校正時間區間
+      // $("#character_search").click(function() {
+      //   // alert("character_search");
+      //   var character_start_date = $("#character_start_date").val();
+      //   var character_end_time = $("#character_end_time").val();
+      //   var modify_status =
+      //     $('input[name="modify_status"]:checked').val() == "true"
+      //       ? true
+      //       : false;
+      //   var page_num = 1;
+
+      //   var storage = JSON.stringify({
+      //     start_date: character_start_date,
+      //     end_date: character_end_time,
+      //     modify_status: modify_status,
+      //     page_num: 1
+      //   });
+
+      //   $.ajax({
+      //     url: "http://api.i-buzz.com.tw/img-recognition/style_recongition",
+      //     type: "POST",
+      //     headers: {
+      //       Authorization: "Bearer " + jwt
+      //     },
+      //     data: storage,
+      //     contentType: "application/json; charset=utf-8",
+      //     error: function(xhr) {
+      //       console.log("傳送人物校正時間區間失敗");
+      //       console.log(xhr);
+      //     },
+      //     success: function(data) {
+      //       console.log("傳送人物校正時間區間成功OOOOO");
+      //       // console.log(data.character_style[1]);
+      //       console.log(data);
+      //       console.log(data.data[0].kol_id);
+
+      //       for (i = 0; i < data.data.length; i++) {
+      //         character =
+      //           "<tr> <td>" +
+      //           data.data[i].kol_id +
+      //           '</td><td> <a href="' +
+      //           data.data[i].pic_url +
+      //           '" data-toggle="lightbox"> <img src="' +
+      //           data.data[i].pic_url +
+      //           '" class="img-fluid rounded" style="max-width: 200px;"/> </a> </td><td class="recognition_result"> 人物風格：' +
+      //           data.data[i].character +
+      //           "<br/> 生活風格：" +
+      //           data.data[i].lifestyle +
+      //           "<br/> 性別：" +
+      //           data.data[i].gender +
+      //           '<br/> </td><td> <select id="character_style" class="btn btn-mini result_btn"> <option selected disabled>' +
+      //           data.data[i].character +
+      //           "</option>" +
+      //           CS +
+      //           ' </select ><br/> <select id="life_style" class="btn btn-mini result_btn"> <option selected disabled>' +
+      //           data.data[i].lifestyle +
+      //           "</option>" +
+      //           LS +
+      //           ' </select ><br/> <select id="character_gender" class="btn btn-mini result_btn"> <option selected disabled>' +
+      //           data.data[i].gender +
+      //           '</option ><option name="male" value="male">male</option ><option name="female" value="female">female</option> </select ><input id="pic_id" type="hidden" value="' +
+      //           data.data[i].pic_id +
+      //           '"><br/> </td><td> <button id="character_save" type="button" class="btn btn-success">儲存</button> </td></tr>';
+      //         $("#character").append(character);
+      //         //   console.log(data.character_style[i])
+      //         //   console.log( character )
+      //       }
+
+      //       localStorage.setItem("character_start_date", character_start_date);
+      //       localStorage.setItem("character_end_time", character_end_time);
+      //       localStorage.setItem("modify_status", modify_status);
+      //       $("#set_character_data").modal("toggle");
+      //       // window.location.reload();
+
+      //       // $('#set_character_data').modal('hide');
+      //     }
+      //   });
+      // });
+
+      //傳送風格辨識結果
+
+      // $(".btn-success").click(function() {
+      //   alert('asd')
+      //   var send_character_style = $("#character_style option:selected").val();
+      //   var send_life_style = $("#life_style option:selected").val();
+      //   var send_character_gender = $("#character_gender option:selected").val();
+      //   var pic_id = $("#pic_id").val();
+      //   console.log(send_character_style,send_life_style,send_character_gender,pic_id)
+
+
+      //   $.ajax({
+      //   url: "http://api.i-buzz.com.tw/img-recognition/style_modify",
+      //   type: "GET",
+      //   headers: {
+      //     Authorization: "Bearer " + jwt
+      //   },
+      //   error: function(xhr) {
+      //     console.log("傳送風格辨識結果失敗");
+      //     console.log(xhr);
+      //   },
+      //   success: function(data) {
+      //     console.log("傳送風格辨識結果成功");
+      //     // console.log(data.character_style[1]);
+      //     console.log(data.characterstyle_list);
+      //   }
+      // });
+      // });
       
-//設定人物校正時間區間
-$("#character_search").click(function() {
-    var character_start_date = $("#character_start_date").val();
-    var character_end_time = $("#character_end_time").val();
-    var modify_status = $('input[name="modify_status"]:checked').val()=="true" ? true:false;
-    var page_num = 1;
-    localStorage.setItem('character_start_date',character_start_date)
-    localStorage.setItem('character_end_time',character_end_time)
-    localStorage.setItem('modify_status',modify_status)
 
+      //結束傳送風格辨識結果
 
-    var asd = JSON.stringify({
-      start_date: character_start_date,
-      end_date: character_end_time,
-      modify_status: modify_status,
-      page_num: 1
-    });
+      //設定色彩校正時間區間
+      $("#color_search").click(function() {
+        alert("color_search");
+        var color_start_date = $("#color_start_date").val();
+        var color_end_time = $("#color_end_time").val();
+        var color_modify_status =
+          $('input[name="color_modify_status"]:checked').val() == "true"
+            ? true
+            : false;
+        var page_num = 1;
 
-    console.log(asd);
-    
-    $.ajax({
-      url: "http://api.i-buzz.com.tw/img-recognition/style_recongition",
-      type: "POST",
-      headers: {
-        Authorization: "Bearer " + jwt
-      },
-      data: asd,
-      contentType: "application/json; charset=utf-8",
-      error: function(xhr) {
-        console.log("傳送人物校正時間區間失敗");
-        console.log(xhr);
-      },
-      success: function(data) {
-        console.log("傳送人物校正時間區間成功");
-        // console.log(data.character_style[1]);
-        console.log(data);
-        console.log(data.data[0].kol_id);
-        
-          for ( i=0 ; i < data.data.length ; i++){
-              character = '<tr> <td>' + data.data[i].kol_id + '</td><td> <a href="'+ data.data[i].pic_url +'" data-toggle="lightbox"> <img src="'+ data.data[i].pic_url +'" class="img-fluid rounded" style="max-width: 200px;"/> </a> </td><td class="recognition_result"> 人物風格：'+ data.data[i].character +'<br/> 生活風格：'+ data.data[i].lifestyle +'<br/> 性別：'+ data.data[i].gender +'<br/> </td><td> <select id="character_style" class="btn btn-mini result_btn"> <option selected disabled>'+ data.data[i].character +'</option> </select ><br/> <select id="life_style" class="btn btn-mini result_btn"> <option selected disabled>'+ data.data[i].lifestyle +'</option>'+ LS +' </select ><br/> <select id="character_gender" class="btn btn-mini result_btn"> <option selected disabled>'+ data.data[i].gender +'</option ><option name="男" value="男">男</option ><option name="女" value="女">女</option> </select ><br/> </td><td> <button type="button" class="btn btn-success">儲存</button> </td></tr>'
-              $('#character').append(character);
-            //   console.log(data.character_style[i])
-            //   console.log( character )
+        var color_data = JSON.stringify({
+          start_date: color_start_date,
+          end_date: color_end_time,
+          modify_status: color_modify_status,
+          page_num: 1
+        });
+
+        console.log(color_data);
+
+        $.ajax({
+          url: ip+"/img-recognition/color_recongition",
+          type: "POST",
+          headers: {
+            Authorization: "Bearer " + jwt
+          },
+          data: color_data,
+          contentType: "application/json; charset=utf-8",
+          error: function(xhr) {
+            console.log("傳送色彩校正時間區間失敗");
+            console.log(xhr);
+          },
+          success: function(data) {
+            console.log("傳送色彩校正時間區間成功");
+            // console.log(data.character_style[1]);
+            console.log(data);
+
+            for (i = 0; i < data.data.length; i++) {
+              color =
+                ' <tr> <th scope="row">' +
+                data.data[i].kol_id +
+                '</th> <td> <a href="' +
+                data.data[i].pic_url +
+                '" data-toggle="lightbox"> <img src="' +
+                data.data[i].pic_url +
+                '" class="img-fluid rounded" style="max-width: 200px;"/> </a> </td><td class="recognition_result"> ?????? </td><td> ' +
+                data.data[i].color[0].RGB +
+                '</td><td> <select class="btn btn-mini result_btn"> <option selected disabled>照片風格</option> <option>正確</option> <option>待修正</option> </select> </td><td> <button type="button" class="btn btn-success">儲存</button> </td></tr>';
+              $("#color").append(color);
+              //   console.log(data.character_style[i])
+              //   console.log( character )
+            }
+            localStorage.setItem("color_start_date", color_start_date);
+            localStorage.setItem("color_end_time", color_end_time);
+            localStorage.setItem("color_modify_status", color_modify_status);
+            $("#set_color_data").modal("toggle");
+            // window.location.reload();
+
+            // $('#set_character_data').modal('hide');
           }
-        $('#set_character_data').modal('toggle');
-        window.location.reload();
-        
-        // $('#set_character_data').modal('hide');
-      }
-    });
-
-
-
-    
-  });
-
-
+        });
+      });
     </script>
   </body>
 </html>
