@@ -27,7 +27,7 @@ var local_modify_status = localStorage.getItem('modify_status') == "true" ? true
 var local_color_start_date = localStorage.getItem('color_start_date')
 var local_color_end_time = localStorage.getItem('color_end_time')
 var local_color_modify_status = localStorage.getItem('color_modify_status') == "true" ? true : false
-var ip = "http://54.254.175.67";
+var ip = "http://18.139.219.48";
 
 
 
@@ -66,7 +66,7 @@ $.ajax({
 //生活風格列表
 function life_style() {
   $.ajax({
-    url: "http://54.254.175.67/img-recognition/lifestyle_list",
+    url: "http://18.139.219.48/img-recognition/lifestyle_list",
     type: "GET",
     headers: {
       Authorization: "Bearer " + jwt
@@ -89,7 +89,7 @@ function life_style() {
 //人物風格列表
 function character_style() {
   $.ajax({
-    url: "http://54.254.175.67/img-recognition/characterstyle_list",
+    url: "http://18.139.219.48/img-recognition/characterstyle_list",
     type: "GET",
     headers: {
       Authorization: "Bearer " + jwt
@@ -309,7 +309,7 @@ $.ajax({
             // console.log(data.character_style[1]);
             console.log(data);
             console.log(data.data[0].kol_id);
-            
+            $("#character").empty();
             for (i = 0; i < data.data.length; i++) {
               character =
                 "<tr> <td>" +
@@ -341,7 +341,7 @@ $.ajax({
                
               $("#character").append(character);
               //   console.log(data.character_style[i])
-              //   console.log( character )
+              //   console.log( character )  
             }
            
 
