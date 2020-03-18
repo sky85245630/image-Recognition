@@ -27,7 +27,7 @@ var local_modify_status = localStorage.getItem('modify_status') == "true" ? true
 var local_color_start_date = localStorage.getItem('color_start_date')
 var local_color_end_time = localStorage.getItem('color_end_time')
 var local_color_modify_status = localStorage.getItem('color_modify_status') == "true" ? true : false
-var ip = "http://18.139.219.48";
+var ip = "http://api.i-buzz-system.com";
 
 
 
@@ -66,7 +66,7 @@ $.ajax({
 //生活風格列表
 function life_style() {
   $.ajax({
-    url: "http://18.139.219.48/img-recognition/lifestyle_list",
+    url: "http://api.i-buzz-system.com/img-recognition/lifestyle_list",
     type: "GET",
     headers: {
       Authorization: "Bearer " + jwt
@@ -89,7 +89,7 @@ function life_style() {
 //人物風格列表
 function character_style() {
   $.ajax({
-    url: "http://18.139.219.48/img-recognition/characterstyle_list",
+    url: "http://api.i-buzz-system.com/img-recognition/characterstyle_list",
     type: "GET",
     headers: {
       Authorization: "Bearer " + jwt
