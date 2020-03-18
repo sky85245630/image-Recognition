@@ -456,7 +456,42 @@ $.ajax({
             }
            
 
+            $(".btn-success").click(function() {
 
+              var send_character_style = $(this).parent().parent().find('#character_style option:selected').val();
+              var send_life_style = $(this).parent().parent().find('#life_style option:selected').val();
+              var send_character_gender = $(this).parent().parent().find('#character_gender option:selected').val();
+              var pic_id = $(this).parent().parent().find('#pic_id').val();
+      
+              console.log(send_character_style,send_life_style,send_character_gender,pic_id);
+              var data = JSON.stringify({
+                imageid:pic_id,
+                life_style:send_life_style,
+                character_style:send_character_style,
+                gender:send_character_gender
+              })
+              console.log(data);
+              $.ajax({
+              url: ip+"/img-recognition/style_modify",
+              type: "POST",
+              headers: {
+                Authorization: "Bearer " + jwt
+              },
+              data:data,
+               contentType: "application/json; charset=utf-8",
+              error: function(xhr) {
+                console.log("傳送風格辨識結果失敗");
+                console.log(xhr);
+              },
+              success: function(data) {
+                console.log("傳送風格辨識結果成功");
+                // console.log(data.character_style[1]);
+                console.log(data);
+                alert('修改成功')
+              }
+            });
+      
+          });
             
             $("#set_character_data").modal("toggle");
             // window.location.reload();
