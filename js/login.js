@@ -48,6 +48,7 @@ $.ajax({
   error: function (xhr) {
     alert("登入失敗");
     console.log(xhr);
+    window.location.href="login.html";
     //   console.log(typeof(JSON.parse({
     //     "username":"img_recognition",
     //     "password":"Ryndz@B3uP"
@@ -58,6 +59,7 @@ $.ajax({
     console.log('登入成功');
     //   alert('OO');
     localStorage.setItem('token', data.access_token);
+
     //   window.location.href="index.html";
   }
 });
