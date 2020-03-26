@@ -1,5 +1,4 @@
 
-
 //確認登入狀態 30s更新一次 
 // $.ajax({
 //     url : "http://3.0.202.119:8080/api/v2/check_token_expired",
@@ -99,6 +98,7 @@ function character_style() {
     error: function (xhr) {
       console.log("取得人物風格列表失敗");
       console.log(xhr)
+window.location.reload();
 
     },
     success: function (data) {
@@ -114,6 +114,8 @@ function character_style() {
     }
   })
 }
+
+
 
 
 
@@ -196,12 +198,13 @@ $.ajax({
   data: storage,
   contentType: "application/json; charset=utf-8",
   error: function (xhr) {
-    console.log("傳送人物校正時間區間失敗");
+    console.log("Local Storage尚無資料");
     console.log(xhr);
+    // window.location.reload();
   },
   success: function (data) {
 
-    console.log("傳送人物校正時間區間成功");
+    console.log("Local Storage取得成功");
     // console.log(data.character_style[1]);
     console.log(data);
     total = '<p >共 5 / '+ data.count +'</p>';
@@ -406,8 +409,11 @@ $.ajax({
           contentType: "application/json; charset=utf-8",
           error: function(xhr) {
             console.log("傳送人物校正時間區間失敗");
+            
             console.log(xhr);
             console.log(storage)
+    window.location.reload();
+
           },
           success: function(data) {
             console.log("傳送人物校正時間區間成功OOOOO");
