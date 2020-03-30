@@ -103,7 +103,7 @@
     >
       <div class="container">
         <img class="logo" src="img/ibuzz_logo.png" />
-
+        <div class="col-md-3 float-right text-right">嗨小廢物，<div class="userName" style="display: contents;">QQ</div></div>
         <button
           class="navbar-toggler"
           type="button"
@@ -160,7 +160,7 @@
             :class="{'active' : link == 'character'}"
             @click.prevent="link ='character'"
           >
-            人物物件校正
+            風格校正
           </button>
           <!-- /人物物件校正btn -->
           <!-- 色彩校正btn -->
@@ -173,6 +173,15 @@
             色彩校正
           </button>
           <!-- /色彩校正btn -->
+
+          <button
+            type="button"
+            class="btn btn-outline-primary sm_row_margin"
+            :class="{'active' : link =='brand'}"
+            @click.prevent="link = 'brand'"
+            >
+            品牌校正
+          </button>
 
           <!-- 人物物件校正選擇資料集 -->
           <div v-show="link == 'character'" style="display: contents;">
@@ -342,7 +351,7 @@
             <thead>
               <tr>
                 <!-- <th scope="col">PIC_ID</th> -->
-                <th scope="col">KOL_ID</th>
+                <th scope="col">KOL_Name</th>
                 <th scope="col">圖片</th>
                 <th scope="col">辨識結果</th>
                 <th scope="col">修正結果</th>
@@ -1160,6 +1169,15 @@
 
       //結束傳送風格辨識結果
 
+
+
+
+        //左上角userName
+        $('.userName').html(localStorage.getItem('userName'))
+
+
+        //end左上角userName
+
       //設定色彩校正時間區間
       $("#color_search").click(function() {
         alert("color_search");
@@ -1201,7 +1219,7 @@
             for (i = 0; i < data.data.length; i++) {
               color =
                 ' <tr> <th scope="row">' +
-                data.data[i].kol_id +
+                data.data[i].kol_name +
                 '</th> <td> <a href="' +
                 data.data[i].pic_url +
                 '" data-toggle="lightbox"> <img src="' +

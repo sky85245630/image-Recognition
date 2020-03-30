@@ -60,6 +60,7 @@ var login = JSON.stringify({
   "password": "Ryndz@B3uP"
 });
 
+
   //圖像辨識token
 $.ajax({
   url: "http://18.139.219.48/img-recognition/login",
@@ -88,6 +89,7 @@ $.ajax({
 
 
     $("#login").click(function() {
+      var userName = $('#username').val();
       var result = $.ajax({
         url: "http://3.0.202.119:8080/api/v2/login",
         type: "POST",
@@ -98,6 +100,7 @@ $.ajax({
         success: function(data) {
           console.log(data);
           localStorage.setItem("innerTool_token", data.token);
+          localStorage.setItem("userName",userName)
           // localStorage.setItem("owner_id", data.owner_id);
           // localStorage.setItem("is_admin", data.is_admin);
           window.location.href = "index.html";

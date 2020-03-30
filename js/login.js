@@ -234,7 +234,7 @@ $.ajax({
     for (i = 0; i < data.data.length; i++) {
       character =
         "<tr> <td>" +
-        data.data[i].kol_id +
+        data.data[i].kol_name +
         '</td><td> <a href="' +
         data.data[i].pic_url +
         '" data-toggle="lightbox"> <img src="' +
@@ -453,7 +453,7 @@ $.ajax({
             for (i = 0; i < data.data.length; i++) {
               character =
                 "<tr> <td>" +
-                data.data[i].kol_id +
+                data.data[i].kol_name +
                 '</td><td> <a href="' +
                 data.data[i].pic_url +
                 '" data-toggle="lightbox"> <img src="' +
@@ -573,7 +573,7 @@ $.ajax({
             for (i = 0; i < data.data.length; i++) {
               color =
                 ' <tr> <th scope="row">' +
-                data.data[i].kol_id +
+                data.data[i].kol_name +
                 '</th> <td> <a href="' +
                 data.data[i].pic_url +
                 '" data-toggle="lightbox"> <img src="' +
