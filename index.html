@@ -175,7 +175,7 @@
           <!-- /色彩校正btn -->
 
           <!-- 人物物件校正選擇資料集 -->
-          <div v-if="link == 'character'" style="display: contents;">
+          <div v-show="link == 'character'" style="display: contents;">
             <button class="btn btn-danger col-sm-2 float-right">
               匯出人物校正照片
             </button>
@@ -257,7 +257,7 @@
           <!-- /人物物件校正 -->
 
           <!-- 色彩校正選擇資料集 -->
-          <div v-if="link == 'color'" style="display: contents;">
+          <div v-show="link == 'color'" style="display: contents;">
             <button class="btn btn-danger col-sm-2 float-right">
               匯出色彩校正照片
             </button>
@@ -493,7 +493,7 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div v-if="definition == 'person'" class="modal-body">
+                <div v-show="definition == 'person'" class="modal-body">
                   <button
                     type="button"
                     class="btn btn-outline-info mr-4"
@@ -516,7 +516,7 @@
                   >
                     女性
                   </button>
-                  <div class="table-responsive" v-if="gender == 'male_female'">
+                  <div class="table-responsive" v-show="gender == 'male_female'">
                     <table
                       id=""
                       class="definition_table table mt-4 table-hover"
@@ -586,7 +586,7 @@
                       文藝清新、陽光運動、嘻哈潮流三種風格，除了辨識人物外，要加上場景跟物件來辨識
                     </p>
                   </div>
-                  <div v-else-if="gender == 'male'">
+                  <div v-show="gender == 'male'">
                     <table
                       class="definition_table table mt-4 table-hover"
                       style="word-break:break-all; word-wrap:break-all;"
@@ -639,7 +639,7 @@
                       </tbody>
                     </table>
                   </div>
-                  <div v-else-if="gender == 'female'">
+                  <div v-show="gender == 'female'">
                     <table
                       class="definition_table table mt-4 table-hover"
                       style="word-break:break-all; word-wrap:break-all;"
@@ -700,7 +700,7 @@
                   </div>
                 </div>
 
-                <div v-else-if="definition == 'life'" class="modal-body">
+                <div v-show="definition == 'life'" class="modal-body">
                   <table
                     class="definition_table table mt-4 table-hover"
                     style="word-break:break-all; word-wrap:break-all;"
@@ -762,7 +762,7 @@
                   </table>
                 </div>
 
-                <div v-else-if="definition == 'luxury'" class="modal-body">
+                <div v-show="definition == 'luxury'" class="modal-body">
                   <table
                     class="definition_table table mt-4 table-hover"
                     style="word-break:break-all; word-wrap:break-all;"
@@ -810,7 +810,7 @@
                   </table>
                 </div>
 
-                <div v-else-if="definition == 'brand'" class="modal-body">
+                <div v-show="definition == 'brand'" class="modal-body">
                   brand
                 </div>
               </div>
@@ -942,8 +942,8 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div v-if="photo_definition == 'photo'" class="modal-body">
-                  <div class="table-responsive" v-if="gender == 'male_female'">
+                <div v-show="photo_definition == 'photo'" class="modal-body">
+                  <div class="table-responsive" v-show="gender == 'male_female'">
                     <table
                       id=""
                       class="definition_table table mt-4 table-hover"
@@ -1196,6 +1196,7 @@
             console.log("傳送色彩校正時間區間成功");
             // console.log(data.character_style[1]);
             console.log(data);
+            console.log(data.data);
 
             for (i = 0; i < data.data.length; i++) {
               color =
@@ -1205,9 +1206,7 @@
                 data.data[i].pic_url +
                 '" data-toggle="lightbox"> <img src="' +
                 data.data[i].pic_url +
-                '" class="img-fluid rounded" style="max-width: 200px;"/> </a> </td><td class="recognition_result"> ?????? </td><td> ' +
-                data.data[i].color[0].RGB +
-                '</td><td> <select class="btn btn-mini result_btn"> <option selected disabled>照片風格</option> <option>正確</option> <option>待修正</option> </select> </td><td> <button type="button" class="btn btn-success">儲存</button> </td></tr>';
+                '" class="img-fluid rounded" style="max-width: 200px;"/> </a> </td><td class="recognition_result"> ?????? </td><td> </td><td> <select class="btn btn-mini result_btn"> <option selected disabled>照片風格</option> <option>正確</option> <option>待修正</option> </select> </td><td> <button type="button" class="btn btn-success">儲存</button> </td></tr>';
               $("#color").append(color);
               //   console.log(data.character_style[i])
               //   console.log( character )
