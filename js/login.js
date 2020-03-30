@@ -15,8 +15,10 @@
 //     }
 // });
 
+
 $(document).ready(function(){
   var jwt = localStorage.getItem('token');
+  var innerTool_token = localStorage.getItem('innerTool_token');
 var innerTool_jwt = localStorage.getItem('innerTool_token');
 var LS = life_style();
 var CS = character_style();
@@ -60,6 +62,25 @@ $.ajax({
     localStorage.setItem('token', data.access_token);
 
     //   window.location.href="index.html";
+  }
+});
+
+
+$.ajax({
+  url: "http://3.0.202.119:8080/api/v2/check_token_expired",
+  type: "GET",
+  headers: {
+      "Authorization": 'Bearer ' + innerTool_token
+  },
+  error: function (xhr) {
+      console.log("登入失敗，請重新登入");
+     
+      console.log(xhr)
+      window.location.href = "login.html";
+      
+  },
+  success: function (xhr) {
+      console.log("登入成功");
   }
 });
 
