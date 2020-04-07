@@ -253,7 +253,7 @@ $.ajax({
         LS +
         ' </select ><br/> <select id="character_gender" class="btn btn-mini result_btn"> <option selected disabled>' +
         data.data[i].gender +
-        '</option ><option name="male" value="male">male</option ><option name="female" value="female">female</option> </select ><input id="pic_id" type="hidden" value="'+data.data[i].pic_id+'"><br/> </td><td> <button id="character_save" type="button" class="btn btn-success">儲存</button> </td></tr>';
+        '</option ><option name="male" value="male">male</option ><option name="female" value="female">female</option><option name="無辨識結果" value="無辨識結果">無辨識結果</option> </select ><input id="pic_id" type="hidden" value="'+data.data[i].pic_id+'"><br/> </td><td> <button id="character_save" type="button" class="btn btn-success">儲存</button> </td></tr>';
 
         
 
@@ -474,7 +474,7 @@ $.ajax({
                 LS +
                 ' </select ><br/> <select id="character_gender" class="btn btn-mini result_btn"> <option selected disabled>' +
                 data.data[i].gender +
-                '</option ><option name="male" value="male">male</option ><option name="female" value="female">female</option> </select ><input id="pic_id" type="hidden" value="' +
+                '</option ><option name="male" value="male">male</option ><option name="female" value="female">female</option><option name="無辨識結果" value="無辨識結果">無辨識結果</option> </select ><input id="pic_id" type="hidden" value="' +
                 data.data[i].pic_id +
                 '"><br/> </td><td> <button id="character_save" type="button" class="btn btn-success">儲存</button> </td></tr>';
 
