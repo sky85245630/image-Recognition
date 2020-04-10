@@ -20,16 +20,18 @@ $(document).ready(function(){
   var jwt = localStorage.getItem('token');
   var innerTool_token = localStorage.getItem('innerTool_token');
 var innerTool_jwt = localStorage.getItem('innerTool_token');
-var LS = life_style();
-var CS = character_style();
+
 var local_character_start_date = localStorage.getItem('character_start_date')
 var local_character_end_time = localStorage.getItem('character_end_time')
+var local_brand_start_date = localStorage.getItem('brand_start_date')
+var local_brand_end_time = localStorage.getItem('brand_end_date')
 var local_modify_status = localStorage.getItem('modify_status') == "true" ? true : false
 var local_color_start_date = localStorage.getItem('color_start_date')
 var local_color_end_time = localStorage.getItem('color_end_time')
 var local_color_modify_status = localStorage.getItem('color_modify_status') == "true" ? true : false
 var ip = "http://api.i-buzz-system.com";
-
+var LS = life_style();
+var CS = character_style();
 
 
 var login = JSON.stringify({
@@ -37,11 +39,20 @@ var login = JSON.stringify({
   "password": "Ryndz@B3uP"
 });
 
+// $('#characterStartTime').append(local_character_start_date);
+// $('#characterEndTime').append(local_character_end_time);
+$('#characterTime').append('時間區間：'+local_character_start_date + ' ~ ' + local_character_end_time)
+$('#colorTime').append('時間區間：'+local_color_start_date + ' ~ ' + local_color_end_time)
+$('#brandTime').append('時間區間：'+local_brand_start_date + ' ~ ' + local_brand_end_time)
+
+
+
   //圖像辨識token
 $.ajax({
   url: ip+"/img-recognition/login",
   type: "POST",
   data: login,
+  async:false,
   // headers: {
   //     Authorization: "Bearer " + jwt
   // },
@@ -85,6 +96,11 @@ $.ajax({
 });
 
 
+
+
+
+    
+
 //生活風格列表
 function life_style() {
   $.ajax({
@@ -93,9 +109,13 @@ function life_style() {
     headers: {
       Authorization: "Bearer " + jwt
     },
+  // cache: false,
+  async:true,
+
     error: function (xhr) {
       console.log("取得生活風格列表失敗");
       console.log(xhr)
+      window.location.reload();
 
     },
     success: function (data) {
@@ -103,8 +123,11 @@ function life_style() {
       for (i = 0; i < data.lifestyle_list.length; i++) {
         LS += '<option name="' + data.lifestyle_list[i] + '" value="' + data.lifestyle_list[i] + '">' + data.lifestyle_list[i] + '</option>'
       }
+      return LS;
+
     }
   })
+
 }
 
 
@@ -116,34 +139,31 @@ function character_style() {
     headers: {
       Authorization: "Bearer " + jwt
     },
+  async:true,
+
+  // cache: false,
     error: function (xhr) {
       console.log("取得人物風格列表失敗");
       console.log(xhr)
-window.location.reload();
+      window.location.reload();
 
     },
     success: function (data) {
       console.log("取得人物風格列表成功");
-      // console.log(data.character_style[1]);
       console.log(data.characterstyle_list)
       for (i = 0; i < data.characterstyle_list.length; i++) {
-        CS += '<option name="' + data.characterstyle_list[i] + '" value="' + data.characterstyle_list[i] + '">' + data.characterstyle_list[i] + '</option>'
-        $('#character_style').append(character);
+        CS += '<option name="' + data.characterstyle_list[i] + '" value="' + data.characterstyle_list[i] + '">' + data.characterstyle_list[i] + '</option>';
+
         //   console.log(data.character_style[i])
         //   console.log( character )
       }
+      return CS;
+
     }
+    
   })
+
 }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -224,13 +244,14 @@ $.ajax({
     // window.location.reload();
   },
   success: function (data) {
-
+    
     console.log("Local Storage取得成功");
     // console.log(data.character_style[1]);
     console.log(data);
     total = '<p >共 5 / '+ data.count +'</p>';
         console.log(total);
         $('.total').append(total);
+        
     for (i = 0; i < data.data.length; i++) {
       character =
         "<tr> <td>" +
@@ -247,7 +268,7 @@ $.ajax({
         data.data[i].gender +
         '<br/> </td><td> <select id="character_style" class="btn btn-mini result_btn"> <option selected disabled>' +
         data.data[i].character +
-        '</option>'+CS+' </select ><br/> <select id="life_style" class="btn btn-mini result_btn"> <option selected disabled>' +
+        '</option>'+ CS +' </select ><br/> <select id="life_style" class="btn btn-mini result_btn"> <option selected disabled>' +
         data.data[i].lifestyle +
         "</option>" +
         LS +
@@ -270,13 +291,15 @@ $.ajax({
         var send_life_style = $(this).parent().parent().find('#life_style option:selected').val();
         var send_character_gender = $(this).parent().parent().find('#character_gender option:selected').val();
         var pic_id = $(this).parent().parent().find('#pic_id').val();
+        var modify_person = localStorage.getItem('userName');
 
-        console.log(send_character_style,send_life_style,send_character_gender,pic_id);
+        console.log(send_character_style,send_life_style,send_character_gender,pic_id,modify_person);
         var data = JSON.stringify({
           imageid:pic_id,
           life_style:send_life_style,
           character_style:send_character_style,
-          gender:send_character_gender
+          gender:send_character_gender,
+          modify_person:modify_person
         })
         console.log(data);
         $.ajax({
@@ -306,6 +329,9 @@ $.ajax({
 });
 
 //結束拉出local Storage資料顯示在畫面上CHARACTER
+
+
+
 
 
 
@@ -491,13 +517,16 @@ $.ajax({
               var send_life_style = $(this).parent().parent().find('#life_style option:selected').val();
               var send_character_gender = $(this).parent().parent().find('#character_gender option:selected').val();
               var pic_id = $(this).parent().parent().find('#pic_id').val();
+              var modify_person = localStorage.getItem('userName');
       
-              console.log(send_character_style,send_life_style,send_character_gender,pic_id);
+              console.log(send_character_style,send_life_style,send_character_gender,pic_id,modify_person);
+
               var data = JSON.stringify({
                 imageid:pic_id,
                 life_style:send_life_style,
                 character_style:send_character_style,
-                gender:send_character_gender
+                gender:send_character_gender,
+                modify_person:modify_person
               })
               console.log(data);
               $.ajax({
@@ -598,9 +627,126 @@ $.ajax({
 
 
 
-//人物辨識下一頁
+      //人物辨識下一頁
       $('#character_nextPage').click(function(){
         window.location.reload();
       })
+
+      //品牌校正下一頁
+      $('#brand_nextPage').click(function(){
+        window.location.reload();
+      })
+
+
+
+      //設定品牌校正時間區間
+      $("#brand_search").click(function() {
+        var brand_start_date = $("#brand_start_date").val();
+        var brand_end_date = $("#brand_end_time").val();
+        var brand_modify_status =
+          $('input[name="brand_modify_status"]:checked').val() == "true" ? true : false;
+        var page_num = 1;
+
+        var storage = JSON.stringify({
+          start_date: brand_start_date,
+          end_date: brand_end_date,
+          modify_status: brand_modify_status,
+          page_num: 1
+        });
+
+        $.ajax({
+          url: ip+"/img-recognition/brand_recongition",
+          type: "POST",
+          headers: {
+            Authorization: "Bearer " + jwt
+          },
+          data: storage,
+          contentType: "application/json; charset=utf-8",
+          error: function(xhr) {
+            console.log("傳送品牌校正時間區間失敗");
+            
+            console.log(xhr);
+            console.log(storage)
+            // window.location.reload();
+
+          },
+          success: function(data) {
+            console.log("傳送品牌校正時間區間成功");
+            brand_total = '<p >共 5 / '+ data.count +'</p>';
+            console.log(total);
+            localStorage.setItem("brand_start_date", brand_start_date);
+            localStorage.setItem("brand_end_date", brand_end_date);
+            localStorage.setItem("brand_modify_status", brand_modify_status);
+            // console.log(data.character_style[1]);
+            console.log(data);
+            // console.log(data.data[0].kol_id);
+            $("#brand").empty();
+            $(".brand_total").empty();
+            $('.brand_total').append(brand_total);
+
+            for (i = 0; i < data.data.length; i++) {
+              brand =
+                "<tr> <td>" +
+                data.data[i].kol_name +
+                '</td><td> <a href="' +
+                data.data[i].pic_url +
+                '" data-toggle="lightbox"> <img src="' +
+                data.data[i].pic_url +
+                '" class="img-fluid rounded" style="max-width: 200px;"/> </a> </td><td class="recognition_result"> '+ data.data[i].brand + ' </td><td> 辨識結果QQ </td><td> <button id="brand_save" type="button" class="btn btn-success">儲存</button> </td></tr>';
+
+               
+              $("#brand").append(brand);
+              //   console.log(data.character_style[i])
+              //   console.log( character )  
+            }
+           
+
+          //   $("#brand_save").click(function() {
+
+          //     var send_character_style = $(this).parent().parent().find('#character_style option:selected').val();
+          //     var send_life_style = $(this).parent().parent().find('#life_style option:selected').val();
+          //     var send_character_gender = $(this).parent().parent().find('#character_gender option:selected').val();
+          //     var pic_id = $(this).parent().parent().find('#pic_id').val();
+          //     var modify_person = localStorage.getItem('userName');
+      
+          //     console.log(send_character_style,send_life_style,send_character_gender,pic_id,modify_person);
+
+          //     var data = JSON.stringify({
+          //       imageid:pic_id,
+          //       life_style:send_life_style,
+          //       character_style:send_character_style,
+          //       gender:send_character_gender,
+          //       modify_person:modify_person
+          //     })
+          //     console.log(data);
+          //     $.ajax({
+          //     url: ip+"/img-recognition/style_modify",
+          //     type: "POST",
+          //     headers: {
+          //       Authorization: "Bearer " + jwt
+          //     },
+          //     data:data,
+          //      contentType: "application/json; charset=utf-8",
+          //     error: function(xhr) {
+          //       console.log("傳送風格辨識結果失敗");
+          //       console.log(xhr);
+          //     },
+          //     success: function(data) {
+          //       console.log("傳送風格辨識結果成功");
+          //       // console.log(data.character_style[1]);
+          //       console.log(data);
+          //       alert('修改成功')
+          //     }
+          //   });
+      
+          // });
+            
+            $("#set_brand_data").modal("toggle");
+            // window.location.reload();
+
+            // $('#set_character_data').modal('hide');
+          }
+        });
+      });
 
 })

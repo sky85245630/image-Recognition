@@ -96,926 +96,1242 @@
     }
   </style>
   <body>
-    <!-- Navigation -->
-    <nav
-      class="navbar navbar-expand-lg navbar-white bg-white fixed-top"
-      style="position: absolute;"
-    >
-      <div class="container">
-        <img class="logo" src="img/ibuzz_logo.png" />
-        <div class="col-md-3 float-right text-right">嗨，<div class="userName" style="display: contents;">QQ</div></div>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarResponsive"
-          aria-controls="navbarResponsive"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon">≡</span>
-        </button>
+    <div id="app">
+      <!-- Navigation -->
+      <nav
+        class="navbar navbar-expand-lg navbar-white bg-white fixed-top"
+        style="position: absolute;"
+      >
+        <div class="container">
+          <img class="logo" src="img/ibuzz_logo.png" />
+          <div class="col-md-4 float-right text-right">
+            嗨，
+            <div class="userName" style="display: contents;">QQ</div>
+            <br />
+            <div id="characterTime" v-show="link =='character'"></div>
+            <div id="colorTime" v-show="link == 'color'"></div>
+            <div id="brandTime" v-show="link == 'brand'"></div>
+          </div>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarResponsive"
+            aria-controls="navbarResponsive"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon">≡</span>
+          </button>
 
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="index.html">AIE應用</a>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="index.html">AIE應用</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">商用報告應用</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="account.html">帳號管理</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- /Navigation -->
+      <!-- menu -->
+      <div id="menu">
+        <div class="container">
+          <ul class="drop-down-menu">
+            <li>
+              <a href="index.html">AIE應用</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">商用報告應用</a>
+            <li>
+              <a href="#">商用報告應用</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="account.html">帳號管理</a>
+            <li>
+              <a href="account.html">帳號管理</a>
             </li>
           </ul>
         </div>
       </div>
-    </nav>
-    <!-- /Navigation -->
-    <!-- menu -->
-    <div id="menu">
-      <div class="container">
-        <ul class="drop-down-menu">
-          <li>
-            <a href="index.html">AIE應用</a>
-          </li>
-          <li>
-            <a href="#">商用報告應用</a>
-          </li>
-          <li>
-            <a href="account.html">帳號管理</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <!-- /menu -->
+      <!-- /menu -->
 
-    <div id="app" class="container lg_col_padding">
-      <div class="row">
-        <div class="col-sm-12">
-          <!-- 人物物件校正btn -->
-          <button
-            type="button"
-            class="btn btn-outline-primary sm_row_margin"
-            :class="{'active' : link == 'character'}"
-            @click.prevent="link ='character'"
-          >
-            風格校正
-          </button>
-          <!-- /人物物件校正btn -->
-          <!-- 色彩校正btn -->
-          <button
-            type="button"
-            class="btn btn-outline-primary sm_row_margin"
-            :class="{'active' : link == 'color'}"
-            @click.prevent="link ='color'"
-          >
-            色彩校正
-          </button>
-          <!-- /色彩校正btn -->
-
-          <button
-            type="button"
-            class="btn btn-outline-primary sm_row_margin"
-            :class="{'active' : link =='brand'}"
-            @click.prevent="link = 'brand'"
-            >
-            品牌校正
-          </button>
-
-          <!-- 人物物件校正選擇資料集 -->
-          <div v-show="link == 'character'" style="display: contents;">
-            <button class="btn btn-danger col-sm-2 float-right">
-              匯出人物校正照片
-            </button>
-            <!-- 設定人物時間區間等 -->
-            <div class="col-sm-2 float-right text-center">
-              <button
-                type="button"
-                class="btn btn-info"
-                data-toggle="modal"
-                data-target="#set_character_data"
-              >
-                設定時間區間
-              </button>
-              <!-- 設定人物時間區間等Modal -->
-              <div class="modal fade" id="set_character_data">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">設定人物校正時間區間</h5>
-                      <button
-                        type="button"
-                        class="close"
-                        data-dismiss="modal"
-                        aria-label="Close"
-                      >
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div id="character_region" class="modal-body">
-                      <table class="table table-borderless">
-                        <tbody>
-                          <tr>
-                            <th class="align-middle" scope="row">開始時間</th>
-                            <td>
-                              <input id="character_start_date" type="date" />
-                            </td>
-                          </tr>
-                          <tr>
-                            <th class="align-middle" scope="row">結束時間</th>
-                            <td>
-                              <input id="character_end_time" type="date" />
-                            </td>
-                          </tr>
-                          <tr>
-                            <th class="align-middle" scope="row">顯示</th>
-                            <td>
-                              <input
-                                type="radio"
-                                name="modify_status"
-                                value="false"
-                              />未辨識的資料<br />
-                              <input
-                                type="radio"
-                                name="modify_status"
-                                value="true"
-                              />已辨識的資料
-                              <!-- 查詢頁數 -->
-                              <input type="hidden" name="page_num" value="1" />
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="modal-footer">
-                      <button
-                        id="character_search"
-                        type="button"
-                        class="btn btn-primary"
-                      >
-                        查詢
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- /設定人物時間區間等 -->
-          </div>
-          <!-- /人物物件校正 -->
-
-          <!-- 色彩校正選擇資料集 -->
-          <div v-show="link == 'color'" style="display: contents;">
-            <button class="btn btn-danger col-sm-2 float-right">
-              匯出色彩校正照片
-            </button>
-            <div class="col-sm-2 float-right text-center">
-              <button
-                type="button"
-                class="btn btn-info"
-                data-toggle="modal"
-                data-target="#set_color_data"
-              >
-                設定時間區間
-              </button>
-              <!-- 設定色彩時間區間等Modal -->
-              <div class="modal fade" id="set_color_data">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">設定色彩校正時間區間</h5>
-                      <button
-                        type="button"
-                        class="close"
-                        data-dismiss="modal"
-                        aria-label="Close"
-                      >
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div id="color_region" class="modal-body">
-                      <table class="table table-borderless">
-                        <tbody>
-                          <tr>
-                            <th class="align-middle" scope="row">開始時間</th>
-                            <td><input id="color_start_date" type="date" /></td>
-                          </tr>
-                          <tr>
-                            <th class="align-middle" scope="row">結束時間</th>
-                            <td><input id="color_end_time" type="date" /></td>
-                          </tr>
-                          <tr>
-                            <th class="align-middle" scope="row">顯示</th>
-                            <td>
-                              <input
-                                type="radio"
-                                name="color_modify_status"
-                                value="false"
-                              />未辨識的資料<br />
-                              <input
-                                type="radio"
-                                name="color_modify_status"
-                                value="true"
-                              />已辨識的資料
-                              <!-- 查詢頁數 -->
-                              <input type="hidden" name="page_num" value="1" />
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="modal-footer">
-                      <button
-                        id="color_search"
-                        type="button"
-                        class="btn btn-primary"
-                      >
-                        查詢
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- /設定色彩時間區間等 -->
-          </div>
-          <!-- /色彩校正 -->
-        </div>
-      </div>
-
-      <div class="row lg_col_padding">
-        <!-- 人物物件校正 -->
-        <div class="col-sm-12 ellipsis" v-show="link == 'character'">
-          <table class=" rwd-table table table-borderless center">
-            <thead>
-              <tr>
-                <!-- <th scope="col">PIC_ID</th> -->
-                <th scope="col">KOL_Name</th>
-                <th scope="col">圖片</th>
-                <th scope="col">辨識結果</th>
-                <th scope="col">修正結果</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody id="character" class="character">
-              <!-- <tr>
-                <td>滴妹</td>
-                <td>
-                  <a href="img/a.jpg" data-toggle="lightbox">
-                    <img
-                      src="img/a.jpg"
-                      class="img-fluid rounded"
-                      style="max-width: 200px;"
-                    />
-                  </a>
-                </td>
-                <td class="recognition_result">
-                  人物風格：嘻哈潮流<br />
-                  生活風格：嘻哈潮流<br />
-                  性別：男<br />
-                </td>
-                <td>
-                  <select id="character_style" class="btn btn-mini result_btn">
-                    <option selected disabled>人物風格</option> </select
-                  ><br />
-                  <select id="life_style" class="btn btn-mini result_btn">
-                    <option selected disabled>生活風格</option> </select
-                  ><br />
-
-                  <select id="character_gender" class="btn btn-mini result_btn">
-                    <option selected disabled>性別</option
-                    ><option name="男" value="男">男</option
-                    ><option name="女" value="女">女</option> </select
-                  ><br />
-                </td>
-
-                <td>
-                  <button id="BTN" type="button" class="btn btn-success">儲存</button>
-                </td>
-              </tr> -->
-              <!-- <tr>
-                <td>林志玲</td>
-                <td>
-                  <a href="img/b.jpg" data-toggle="lightbox">
-                    <img
-                      src="img/b.jpg"
-                      class="img-fluid rounded"
-                      style="max-width: 200px;"
-                    />
-                  </a>
-                </td>
-                <td class="recognition_result">
-                  人物風格：嘻哈潮流<br />
-                  生活風格：嘻哈潮流<br />
-                  性別：男<br />
-                </td>
-                <td>
-                  <select class="btn btn-mini result_btn">
-                    <option selected disabled>人物風格</option> </select
-                  ><br />
-                  <select class="btn btn-mini result_btn">
-                    <option selected disabled>生活風格</option> </select
-                  ><br />
-
-                  <select class="btn btn-mini result_btn">
-                    <option selected disabled>性別</option> </select
-                  ><br />
-                </td>
-
-                <td>
-                  <button type="button" class="btn btn-success">儲存</button>
-                </td>
-              </tr> -->
-            </tbody>
-          </table>
-          <!-- 定義描述 -->
-          <div class="row">
-            <div class="col-md-4">
-              <button
+      <div class="container lg_col_padding">
+        <div class="row">
+          <div class="col-sm-12">
+            <!-- 人物物件校正btn -->
+            <button
+              id="character_btn"
               type="button"
-              class="btn btn-warning"
-              data-toggle="modal"
-              data-target="#definition"
+              class="btn btn-outline-primary sm_row_margin"
+              :class="{'active' : link == 'character'}"
+              @click.prevent="link ='character'"
             >
-              定義描述＋
+              風格校正
             </button>
-            </div>
-            <div class="col-md-4 text-center total">
-               
-            </div>
-            <div class="col-md-4 text-right">
-              <button id="character_nextPage" type="button" class="btn btn-primary">下一頁</button>
-            </div>
-          </div>
-          <div
-            class="modal fade"
-            id="definition"
-            tabindex="-1"
-            role="dialog"
-            aria-labelledby="exampleModalCenterTitle"
-            aria-hidden="true"
-          >
-            <div
-              class="modal-dialog modal-dialog-centered modal-xl"
-              role="document"
+            <!-- /人物物件校正btn -->
+            <!-- 色彩校正btn -->
+            <button
+              id="color_btn"
+              type="button"
+              class="btn btn-outline-primary sm_row_margin"
+              :class="{'active' : link == 'color'}"
+              @click.prevent="link ='color'"
             >
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle">
+              色彩校正
+            </button>
+            <!-- /色彩校正btn -->
+
+            <!-- /品牌校正btn -->
+            <button
+              id="brand_btn"
+              type="button"
+              class="btn btn-outline-primary sm_row_margin"
+              :class="{'active' : link =='brand'}"
+              @click.prevent="link = 'brand'"
+            >
+              品牌校正
+            </button>
+            <!-- /品牌校正btn -->
+
+            <!-- 人物物件校正選擇資料集 -->
+            <div v-show="link == 'character'" style="display: contents;">
+              <button class="btn btn-danger col-sm-2 float-right">
+                匯出人物校正照片
+              </button>
+              <!-- 設定人物時間區間等 -->
+              <div class="col-sm-2 float-right text-center">
+                <button
+                  type="button"
+                  class="btn btn-info"
+                  data-toggle="modal"
+                  data-target="#set_character_data"
+                >
+                  設定時間區間
+                </button>
+                <!-- 設定人物時間區間等Modal -->
+                <div class="modal fade" id="set_character_data">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">設定人物校正時間區間</h5>
+                        <button
+                          type="button"
+                          class="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div id="character_region" class="modal-body">
+                        <table class="table table-borderless">
+                          <tbody>
+                            <tr>
+                              <th class="align-middle" scope="row">開始時間</th>
+                              <td>
+                                <input id="character_start_date" type="date" />
+                              </td>
+                            </tr>
+                            <tr>
+                              <th class="align-middle" scope="row">結束時間</th>
+                              <td>
+                                <input id="character_end_time" type="date" />
+                              </td>
+                            </tr>
+                            <tr>
+                              <th class="align-middle" scope="row">顯示</th>
+                              <td>
+                                <input
+                                  type="radio"
+                                  name="modify_status"
+                                  value="false"
+                                />未辨識的資料<br />
+                                <input
+                                  type="radio"
+                                  name="modify_status"
+                                  value="true"
+                                />已辨識的資料
+                                <!-- 查詢頁數 -->
+                                <input
+                                  type="hidden"
+                                  name="page_num"
+                                  value="1"
+                                />
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          id="character_search"
+                          type="button"
+                          class="btn btn-primary"
+                        >
+                          查詢
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /設定人物時間區間等 -->
+            </div>
+            <!-- /人物物件校正 -->
+
+            <!-- 色彩校正選擇資料集 -->
+            <div v-show="link == 'color'" style="display: contents;">
+              <button class="btn btn-danger col-sm-2 float-right">
+                匯出色彩校正照片
+              </button>
+              <div class="col-sm-2 float-right text-center">
+                <button
+                  type="button"
+                  class="btn btn-info"
+                  data-toggle="modal"
+                  data-target="#set_color_data"
+                >
+                  設定時間區間
+                </button>
+                <!-- 設定色彩時間區間等Modal -->
+                <div class="modal fade" id="set_color_data">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">設定色彩校正時間區間</h5>
+                        <button
+                          type="button"
+                          class="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div id="color_region" class="modal-body">
+                        <table class="table table-borderless">
+                          <tbody>
+                            <tr>
+                              <th class="align-middle" scope="row">開始時間</th>
+                              <td>
+                                <input id="color_start_date" type="date" />
+                              </td>
+                            </tr>
+                            <tr>
+                              <th class="align-middle" scope="row">結束時間</th>
+                              <td><input id="color_end_time" type="date" /></td>
+                            </tr>
+                            <tr>
+                              <th class="align-middle" scope="row">顯示</th>
+                              <td>
+                                <input
+                                  type="radio"
+                                  name="color_modify_status"
+                                  value="false"
+                                />未辨識的資料<br />
+                                <input
+                                  type="radio"
+                                  name="color_modify_status"
+                                  value="true"
+                                />已辨識的資料
+                                <!-- 查詢頁數 -->
+                                <input
+                                  type="hidden"
+                                  name="page_num"
+                                  value="1"
+                                />
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          id="color_search"
+                          type="button"
+                          class="btn btn-primary"
+                        >
+                          查詢
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /設定色彩時間區間等 -->
+            </div>
+            <!-- /色彩校正 -->
+
+            <!-- 品牌校正選擇資料集 -->
+            <div v-show="link == 'brand'" style="display: contents;">
+              <button class="btn btn-danger col-sm-2 float-right">
+                匯出品牌校正照片
+              </button>
+              <div class="col-sm-2 float-right text-center">
+                <button
+                  type="button"
+                  class="btn btn-info"
+                  data-toggle="modal"
+                  data-target="#set_brand_data"
+                >
+                  設定時間區間
+                </button>
+                <!-- 設定品牌時間區間等Modal -->
+                <div class="modal fade" id="set_brand_data">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">設定品牌校正時間區間</h5>
+                        <button
+                          type="button"
+                          class="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div id="brand_region" class="modal-body">
+                        <table class="table table-borderless">
+                          <tbody>
+                            <tr>
+                              <th class="align-middle" scope="row">開始時間</th>
+                              <td>
+                                <input id="brand_start_date" type="date" />
+                              </td>
+                            </tr>
+                            <tr>
+                              <th class="align-middle" scope="row">結束時間</th>
+                              <td><input id="brand_end_time" type="date" /></td>
+                            </tr>
+                            <tr>
+                              <th class="align-middle" scope="row">顯示</th>
+                              <td>
+                                <input
+                                  type="radio"
+                                  name="brand_modify_status"
+                                  value="false"
+                                />未辨識的資料<br />
+                                <input
+                                  type="radio"
+                                  name="brand_modify_status"
+                                  value="true"
+                                />已辨識的資料
+                                <!-- 查詢頁數 -->
+                                <input
+                                  type="hidden"
+                                  name="page_num"
+                                  value="1"
+                                />
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          id="brand_search"
+                          type="button"
+                          class="btn btn-primary"
+                        >
+                          查詢
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /設定品牌時間區間等 -->
+            </div>
+            <!-- /品牌校正 -->
+          </div>
+        </div>
+
+        <div class="row lg_col_padding">
+          <!-- 人物物件校正 -->
+          <div class="col-sm-12 ellipsis" v-show="link == 'character'">
+            <table class=" rwd-table table table-borderless center">
+              <thead>
+                <tr>
+                  <!-- <th scope="col">PIC_ID</th> -->
+                  <th scope="col">KOL_Name</th>
+                  <th scope="col">圖片</th>
+                  <th scope="col">辨識結果</th>
+                  <th scope="col">修正結果</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody id="character" class="character">
+                <!-- <tr>
+              <td>滴妹</td>
+              <td>
+                <a href="img/a.jpg" data-toggle="lightbox">
+                  <img
+                    src="img/a.jpg"
+                    class="img-fluid rounded"
+                    style="max-width: 200px;"
+                  />
+                </a>
+              </td>
+              <td class="recognition_result">
+                人物風格：嘻哈潮流<br />
+                生活風格：嘻哈潮流<br />
+                性別：男<br />
+              </td>
+              <td>
+                <select id="character_style" class="btn btn-mini result_btn">
+                  <option selected disabled>人物風格</option> </select
+                ><br />
+                <select id="life_style" class="btn btn-mini result_btn">
+                  <option selected disabled>生活風格</option> </select
+                ><br />
+
+                <select id="character_gender" class="btn btn-mini result_btn">
+                  <option selected disabled>性別</option
+                  ><option name="男" value="男">男</option
+                  ><option name="女" value="女">女</option> </select
+                ><br />
+              </td>
+
+              <td>
+                <button id="BTN" type="button" class="btn btn-success">儲存</button>
+              </td>
+            </tr> -->
+                <!-- <tr>
+              <td>林志玲</td>
+              <td>
+                <a href="img/b.jpg" data-toggle="lightbox">
+                  <img
+                    src="img/b.jpg"
+                    class="img-fluid rounded"
+                    style="max-width: 200px;"
+                  />
+                </a>
+              </td>
+              <td class="recognition_result">
+                人物風格：嘻哈潮流<br />
+                生活風格：嘻哈潮流<br />
+                性別：男<br />
+              </td>
+              <td>
+                <select class="btn btn-mini result_btn">
+                  <option selected disabled>人物風格</option> </select
+                ><br />
+                <select class="btn btn-mini result_btn">
+                  <option selected disabled>生活風格</option> </select
+                ><br />
+
+                <select class="btn btn-mini result_btn">
+                  <option selected disabled>性別</option> </select
+                ><br />
+              </td>
+
+              <td>
+                <button type="button" class="btn btn-success">儲存</button>
+              </td>
+            </tr> -->
+              </tbody>
+            </table>
+            <!-- 定義描述 -->
+            <div class="row">
+              <div class="col-md-4">
+                <button
+                  type="button"
+                  class="btn btn-warning"
+                  data-toggle="modal"
+                  data-target="#definition"
+                >
+                  定義描述＋
+                </button>
+              </div>
+              <div class="col-md-4 text-center total"></div>
+              <div class="col-md-4 text-right">
+                <button
+                  id="character_nextPage"
+                  type="button"
+                  class="btn btn-primary"
+                >
+                  下一頁
+                </button>
+              </div>
+            </div>
+            <div
+              class="modal fade"
+              id="definition"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="exampleModalCenterTitle"
+              aria-hidden="true"
+            >
+              <div
+                class="modal-dialog modal-dialog-centered modal-xl"
+                role="document"
+              >
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">
+                      <button
+                        type="button"
+                        class="btn btn-info mr-4"
+                        :class="{'active' : definition == 'person'}"
+                        @click.prevent="definition = 'person'"
+                      >
+                        人物風格</button
+                      ><button
+                        type="button"
+                        class="btn btn-info mr-4"
+                        :class="{'active' : definition == 'life'}"
+                        @click.prevent="definition= 'life'"
+                      >
+                        生活風格</button
+                      ><button
+                        type="button"
+                        class="btn btn-info mr-4"
+                        :class="{'active' : definition == 'luxury'}"
+                        @click.prevent="definition = 'luxury'"
+                      >
+                        奢華品牌</button
+                      ><button
+                        type="button"
+                        class="btn btn-info mr-4"
+                        :class="{'active' : definition == 'brand'}"
+                        @click.prevent="definition = 'brand'"
+                      >
+                        品牌
+                      </button>
+                    </h5>
                     <button
                       type="button"
-                      class="btn btn-info mr-4"
-                      :class="{'active' : definition == 'person'}"
-                      @click.prevent="definition = 'person'"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
                     >
-                      人物風格</button
-                    ><button
-                      type="button"
-                      class="btn btn-info mr-4"
-                      :class="{'active' : definition == 'life'}"
-                      @click.prevent="definition= 'life'"
-                    >
-                      生活風格</button
-                    ><button
-                      type="button"
-                      class="btn btn-info mr-4"
-                      :class="{'active' : definition == 'luxury'}"
-                      @click.prevent="definition = 'luxury'"
-                    >
-                      奢華品牌</button
-                    ><button
-                      type="button"
-                      class="btn btn-info mr-4"
-                      :class="{'active' : definition == 'brand'}"
-                      @click.prevent="definition = 'brand'"
-                    >
-                      品牌
+                      <span aria-hidden="true">&times;</span>
                     </button>
-                  </h5>
-                  <button
-                    type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div v-show="definition == 'person'" class="modal-body">
-                  <button
-                    type="button"
-                    class="btn btn-outline-info mr-4"
-                    :class="{'active' : gender == 'male_female'}"
-                    @click.prevent="gender = 'male_female'"
-                  >
-                    男女</button
-                  ><button
-                    type="button"
-                    class="btn btn-outline-info mr-4"
-                    :class="{'active' : gender == 'male'}"
-                    @click.prevent="gender = 'male'"
-                  >
-                    男性</button
-                  ><button
-                    type="button"
-                    class="btn btn-outline-info mr-4"
-                    :class="{'active' : gender == 'female'}"
-                    @click.prevent="gender = 'female'"
-                  >
-                    女性
-                  </button>
-                  <div class="table-responsive" v-show="gender == 'male_female'">
-                    <table
-                      id=""
-                      class="definition_table table mt-4 table-hover"
-                      style="word-break:break-all; word-wrap:break-all;"
-                    >
-                      <thead>
-                        <tr>
-                          <th scope="col">男女</th>
-                          <th scope="col">妝容(髮)</th>
-                          <th scope="col">表情</th>
-                          <th scope="col">身形</th>
-                          <th scope="col" style="width: 35%;">物件</th>
-                          <th scope="col" style="width: 15%;">場景</th>
-                          <th scope="col">照片色系</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <th scope="row">高冷冰山</th>
-                          <td>露額頭</td>
-                          <td>沒有笑容</td>
-                          <td></td>
-                          <td>
-                            中性色、冷色穿著。<br />
-                            男生：多襯衫、素色上衣、西裝、大衣(冬天)。<br />
-                            女生：灰色、米色、駝色、白色系衣物。
-                          </td>
-                          <td></td>
-                          <td>冷色系、較暗</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">文藝清新</th>
-                          <td></td>
-                          <td></td>
-                          <td>全身照</td>
-                          <td>
-                            衣物顏色以大地色、白色、藍色、格紋、條紋為主，配件多有圓框眼鏡、金邊眼鏡、帆布包、漁夫帽、書、相機、皮革單品。
-                          </td>
-                          <td>建築物、植物、咖啡廳/餐廳室內環境。</td>
-                          <td></td>
-                        </tr>
-                        <tr>
-                          <th scope="row">陽光運動</th>
-                          <td></td>
-                          <td></td>
-                          <td>露出肌肉</td>
-                          <td>
-                            比基尼、小可愛、泳衣、上衣明顯logo運動服，球鞋。
-                          </td>
-                          <td>健身房、海邊、游泳池、運動場</td>
-                          <td></td>
-                        </tr>
-                        <tr>
-                          <th scope="row">嘻哈潮流</th>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td>
-                            棒球帽、寬大T、墨鏡、金銀大項鍊、眼鏡、毛帽、頭巾、棒球外套。
-                          </td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <p class="definition_table_notion">
-                      文藝清新、陽光運動、嘻哈潮流三種風格，除了辨識人物外，要加上場景跟物件來辨識
-                    </p>
                   </div>
-                  <div v-show="gender == 'male'">
-                    <table
-                      class="definition_table table mt-4 table-hover"
-                      style="word-break:break-all; word-wrap:break-all;"
+                  <div v-show="definition == 'person'" class="modal-body">
+                    <button
+                      type="button"
+                      class="btn btn-outline-info mr-4"
+                      :class="{'active' : gender == 'male_female'}"
+                      @click.prevent="gender = 'male_female'"
                     >
-                      <thead>
-                        <tr>
-                          <th scope="col">男生</th>
-                          <th scope="col">眼睛(大/中/小)</th>
-                          <th scope="col">眼型(圓/細長)</th>
-                          <th scope="col">鼻(挺)</th>
-                          <th scope="col">臉型(鈍/銳)</th>
-                          <th scope="col">身形</th>
-                          <th scope="col">妝容(髮50)</th>
-                          <th scope="col">物件</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <th scope="row">成熟型男</th>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td>有鬍子、皺紋、油頭、平頭。</td>
-                          <td>西裝外套、襯衫</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">花美男</th>
-                          <td>大</td>
-                          <td></td>
-                          <td>挺</td>
-                          <td></td>
-                          <td>身型偏瘦</td>
-                          <td>皮膚白淨。 妝感較重。</td>
-                          <td></td>
-                        </tr>
-                        <tr>
-                          <th scope="row">可愛呆萌</th>
-                          <td>大</td>
-                          <td>圓</td>
-                          <td></td>
-                          <td>
-                            鈍
-                          </td>
-                          <td></td>
-                          <td>齊瀏海、笑很開。</td>
-                          <td></td>
-                        </tr>
-                      </tbody>
-                    </table>
+                      男女</button
+                    ><button
+                      type="button"
+                      class="btn btn-outline-info mr-4"
+                      :class="{'active' : gender == 'male'}"
+                      @click.prevent="gender = 'male'"
+                    >
+                      男性</button
+                    ><button
+                      type="button"
+                      class="btn btn-outline-info mr-4"
+                      :class="{'active' : gender == 'female'}"
+                      @click.prevent="gender = 'female'"
+                    >
+                      女性
+                    </button>
+                    <div
+                      class="table-responsive"
+                      v-show="gender == 'male_female'"
+                    >
+                      <table
+                        id=""
+                        class="definition_table table mt-4 table-hover"
+                        style="word-break:break-all; word-wrap:break-all;"
+                      >
+                        <thead>
+                          <tr>
+                            <th scope="col">男女</th>
+                            <th scope="col">妝容(髮)</th>
+                            <th scope="col">表情</th>
+                            <th scope="col">身形</th>
+                            <th scope="col" style="width: 35%;">物件</th>
+                            <th scope="col" style="width: 15%;">場景</th>
+                            <th scope="col">照片色系</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">高冷冰山</th>
+                            <td>露額頭</td>
+                            <td>沒有笑容</td>
+                            <td></td>
+                            <td>
+                              中性色、冷色穿著。<br />
+                              男生：多襯衫、素色上衣、西裝、大衣(冬天)。<br />
+                              女生：灰色、米色、駝色、白色系衣物。
+                            </td>
+                            <td></td>
+                            <td>冷色系、較暗</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">文藝清新</th>
+                            <td></td>
+                            <td></td>
+                            <td>全身照</td>
+                            <td>
+                              衣物顏色以大地色、白色、藍色、格紋、條紋為主，配件多有圓框眼鏡、金邊眼鏡、帆布包、漁夫帽、書、相機、皮革單品。
+                            </td>
+                            <td>建築物、植物、咖啡廳/餐廳室內環境。</td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <th scope="row">陽光運動</th>
+                            <td></td>
+                            <td></td>
+                            <td>露出肌肉</td>
+                            <td>
+                              比基尼、小可愛、泳衣、上衣明顯logo運動服，球鞋。
+                            </td>
+                            <td>健身房、海邊、游泳池、運動場</td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <th scope="row">嘻哈潮流</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                              棒球帽、寬大T、墨鏡、金銀大項鍊、眼鏡、毛帽、頭巾、棒球外套。
+                            </td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <p class="definition_table_notion">
+                        文藝清新、陽光運動、嘻哈潮流三種風格，除了辨識人物外，要加上場景跟物件來辨識
+                      </p>
+                    </div>
+                    <div v-show="gender == 'male'">
+                      <table
+                        class="definition_table table mt-4 table-hover"
+                        style="word-break:break-all; word-wrap:break-all;"
+                      >
+                        <thead>
+                          <tr>
+                            <th scope="col">男生</th>
+                            <th scope="col">眼睛(大/中/小)</th>
+                            <th scope="col">眼型(圓/細長)</th>
+                            <th scope="col">鼻(挺)</th>
+                            <th scope="col">臉型(鈍/銳)</th>
+                            <th scope="col">身形</th>
+                            <th scope="col">妝容(髮50)</th>
+                            <th scope="col">物件</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">成熟型男</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>有鬍子、皺紋、油頭、平頭。</td>
+                            <td>西裝外套、襯衫</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">花美男</th>
+                            <td>大</td>
+                            <td></td>
+                            <td>挺</td>
+                            <td></td>
+                            <td>身型偏瘦</td>
+                            <td>皮膚白淨。 妝感較重。</td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <th scope="row">可愛呆萌</th>
+                            <td>大</td>
+                            <td>圓</td>
+                            <td></td>
+                            <td>
+                              鈍
+                            </td>
+                            <td></td>
+                            <td>齊瀏海、笑很開。</td>
+                            <td></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div v-show="gender == 'female'">
+                      <table
+                        class="definition_table table mt-4 table-hover"
+                        style="word-break:break-all; word-wrap:break-all;"
+                      >
+                        <thead>
+                          <tr>
+                            <th scope="col">女生</th>
+                            <th scope="col">眼睛(大/中/小)</th>
+                            <th scope="col">眼型(圓/細長)</th>
+                            <th scope="col">鼻(挺)</th>
+                            <th scope="col">臉型(鈍/銳)</th>
+                            <th scope="col">身形</th>
+                            <th scope="col">妝容</th>
+                            <th scope="col">物件</th>
+                            <th scope="col">照片色系</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">甜美可愛</th>
+                            <td>大</td>
+                            <td>圓形</td>
+                            <td></td>
+                            <td>鈍</td>
+                            <td>微笑、露齒笑</td>
+                            <td>淡妝、有腮紅</td>
+                            <td>
+                              穿著雪紡、簍空雕花、薄紗蕾絲。<br />衣服顏色偏暖色系。
+                            </td>
+                            <td>彩度高、色彩飽和、有光亮感、色調偏粉白</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">成熟艷麗</th>
+                            <td></td>
+                            <td>細長</td>
+                            <td>挺</td>
+                            <td>銳</td>
+                            <td></td>
+                            <td>妝感重、眼妝、唇妝</td>
+                            <td>
+                              一字領、無袖、低胸服飾、露肩露背、露腿、衣服顏色偏中性色、冷色系。
+                            </td>
+                            <td>色彩明暗鮮明、冷色系</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">清純空靈</th>
+                            <td>中</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>皮膚白皙，妝很淡或素顏</td>
+                            <td></td>
+                            <td>白色系亮度高</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
-                  <div v-show="gender == 'female'">
+
+                  <div v-show="definition == 'life'" class="modal-body">
                     <table
                       class="definition_table table mt-4 table-hover"
                       style="word-break:break-all; word-wrap:break-all;"
                     >
-                      <thead>
-                        <tr>
-                          <th scope="col">女生</th>
-                          <th scope="col">眼睛(大/中/小)</th>
-                          <th scope="col">眼型(圓/細長)</th>
-                          <th scope="col">鼻(挺)</th>
-                          <th scope="col">臉型(鈍/銳)</th>
-                          <th scope="col">身形</th>
-                          <th scope="col">妝容</th>
-                          <th scope="col">物件</th>
-                          <th scope="col">照片色系</th>
-                        </tr>
-                      </thead>
                       <tbody>
                         <tr>
                           <th scope="row">甜美可愛</th>
-                          <td>大</td>
-                          <td>圓形</td>
-                          <td></td>
-                          <td>鈍</td>
-                          <td>微笑、露齒笑</td>
-                          <td>淡妝、有腮紅</td>
                           <td>
-                            穿著雪紡、簍空雕花、薄紗蕾絲。<br />衣服顏色偏暖色系。
+                            名牌(logo)：衣物、包包、車子、手錶、珠寶/遊艇趴、時尚秀
                           </td>
-                          <td>彩度高、色彩飽和、有光亮感、色調偏粉白</td>
                         </tr>
                         <tr>
-                          <th scope="row">成熟艷麗</th>
-                          <td></td>
-                          <td>細長</td>
-                          <td>挺</td>
-                          <td>銳</td>
-                          <td></td>
-                          <td>妝感重、眼妝、唇妝</td>
+                          <th scope="row">派對</th>
                           <td>
-                            一字領、無袖、低胸服飾、露肩露背、露腿、衣服顏色偏中性色、冷色系。
+                            人數大於三人，主題式cosplay
+                            夜店、KTV、酒吧、啤酒餐廳
                           </td>
-                          <td>色彩明暗鮮明、冷色系</td>
                         </tr>
                         <tr>
-                          <th scope="row">清純空靈</th>
-                          <td>中</td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td>皮膚白皙，妝很淡或素顏</td>
-                          <td></td>
-                          <td>白色系亮度高</td>
+                          <th scope="row">極限運動 (極限冒險)</th>
+                          <td>
+                            花式滑板、花式單車、花式滑雪、滑翔、生存遊戲、極限直排輪、攀岩、衝浪、越野摩托車、賽車
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row">DIY手作</th>
+                          <td>
+                            手作藝術品(手拉坏、吹玻璃、陶土)、手作裝飾品(木工、乾燥花diy)、烘焙、手帳
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row">居家設計</th>
+                          <td>各項家具(詳細列)/室內設計、室內空間</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">藝文</th>
+                          <td>
+                            畫展、攝影展、舞台劇、音樂會、話劇、相聲、舞團、手作展
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row">戶外生活</th>
+                          <td>露營、野餐、野外烤肉</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">商務</th>
+                          <td>商務研討會、商務展、商務會議。</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">科技宅</th>
+                          <td>3C產品發表會</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">健康樂動</th>
+                          <td>
+                            健身房、潛水、路跑、馬拉松、瑜珈、爬山、球類運動、健行、跳街舞
+                          </td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
-                </div>
 
-                <div v-show="definition == 'life'" class="modal-body">
-                  <table
-                    class="definition_table table mt-4 table-hover"
-                    style="word-break:break-all; word-wrap:break-all;"
-                  >
-                    <tbody>
-                      <tr>
-                        <th scope="row">甜美可愛</th>
-                        <td>
-                          名牌(logo)：衣物、包包、車子、手錶、珠寶/遊艇趴、時尚秀
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">派對</th>
-                        <td>
-                          人數大於三人，主題式cosplay 夜店、KTV、酒吧、啤酒餐廳
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">極限運動 (極限冒險)</th>
-                        <td>
-                          花式滑板、花式單車、花式滑雪、滑翔、生存遊戲、極限直排輪、攀岩、衝浪、越野摩托車、賽車
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">DIY手作</th>
-                        <td>
-                          手作藝術品(手拉坏、吹玻璃、陶土)、手作裝飾品(木工、乾燥花diy)、烘焙、手帳
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">居家設計</th>
-                        <td>各項家具(詳細列)/室內設計、室內空間</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">藝文</th>
-                        <td>
-                          畫展、攝影展、舞台劇、音樂會、話劇、相聲、舞團、手作展
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">戶外生活</th>
-                        <td>露營、野餐、野外烤肉</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">商務</th>
-                        <td>商務研討會、商務展、商務會議。</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">科技宅</th>
-                        <td>3C產品發表會</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">健康樂動</th>
-                        <td>
-                          健身房、潛水、路跑、馬拉松、瑜珈、爬山、球類運動、健行、跳街舞
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-
-                <div v-show="definition == 'luxury'" class="modal-body">
-                  <table
-                    class="definition_table table mt-4 table-hover"
-                    style="word-break:break-all; word-wrap:break-all;"
-                  >
-                    <tbody>
-                      <tr>
-                        <th scope="row" style="width: 10%;">服飾品牌</th>
-                        <td>
-                          CHANEL香奈兒/Dior迪奧/Armani阿瑪尼/Givenchy紀梵希/Versace范思哲/Burberry博柏利/Gucci古馳/LV路易威登/Prada普拉達/Valentino華倫天奴
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">包包品牌</th>
-                        <td>
-                          愛馬仕（Hermès）/路易威登（LV）/香奈兒（
-                          CHANEL）/普拉達（PRADA）/葆蝶家（BottegaVeneta）/芬迪(Fendi)/
-                          古馳（
-                          Gucci）/迪奧（Dior）/巴黎世家（BALENCIAGA）/寇馳（COACH）
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">汽車品牌</th>
-                        <td>
-                          保時捷（Porsche）/邁巴赫（德文：Maybach）/梅賽德斯-奔馳（Mercedes-Benz）/瑪莎拉蒂/賓利/勞斯萊斯/阿斯頓·馬丁（AstonMartin）/法拉利/藍寶堅尼/布加迪
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">手錶品牌</th>
-                        <td>
-                          百達翡麗(Patek Philippe)/江詩丹頓(Vacheron
-                          Constantin)/愛彼(Audemars
-                          Piguet)/寶璣(Breguet)/萬國(IWC)/伯爵(Piaget)/
-                          卡地亞(Cartier)/積傢(Jaeger-LeCoultre)/勞力士(Rolex)/芝柏(Girard-Perregaux)
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">珠寶品牌</th>
-                        <td>
-                          卡地亞(Cartier)/戴瑞(Darry Ring)
-                          /蒂芬尼(Tiffany&Co)/寶格麗(Bvlgari)/梵克雅寶VanCleef&Arpels/海瑞溫斯頓HarryWinston/
-                          蒂爵(DERIER)/德米亞尼(Damiani)/寶詩龍(Boucheron)/御木本(MIKIMOTO)
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-
-                <div v-show="definition == 'brand'" class="modal-body">
-                  brand
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- /定義描述 -->
-        </div>
-        <!-- /人物物件校正 -->
-
-        <!-- 色彩校正 -->
-        <div class="col-sm-12" v-show="link == 'color'">
-          <table class=" rwd-table table table-borderless center">
-            <thead>
-              <tr>
-                <th scope="col">KOL_ID</th>
-                <th scope="col">圖片</th>
-                <th scope="col">照片風格</th>
-                <th scope="col">辨識結果RGB</th>
-                <th scope="col">修正結果</th>
-              </tr>
-            </thead>
-            <tbody id="color" class="character">
-              <!-- <tr>
-                <th scope="row">A001</th>
-                <td>滴妹</td>
-                <td>
-                  <a href="img/c.jpg" data-toggle="lightbox">
-                    <img
-                      src="img/c.jpg"
-                      class="img-fluid rounded"
-                      style="max-width: 200px;"
-                    />
-                  </a>
-                </td>
-                <td class="recognition_result">
-                  陽光朝氣
-                </td>
-                <td>
-                  色碼%<br />
-                  色碼%<br />
-                  色碼%<br />
-                </td>
-                <td>
-                  色碼%<br />
-                  色碼%<br />
-                  色碼%<br />
-                </td>
-                <td>
-                  <select class="btn btn-mini result_btn">
-                    <option selected disabled>照片風格</option>
-                    <option>正確</option>
-                    <option>待修正</option>
-                  </select>
-                </td>
-                <td>
-                  <button type="button" class="btn btn-success">儲存</button>
-                </td>
-              </tr> -->
-              <!-- <tr>
-                <th scope="row">A002</th>
-                <td>
-                  <a href="img/d.jpg" data-toggle="lightbox">
-                    <img
-                      src="img/d.jpg"
-                      class="img-fluid rounded"
-                      style="max-width: 200px;"
-                    />
-                  </a>
-                </td>
-                <td class="recognition_result">
-                  陽光朝氣
-                </td>
-                <td>
-                  色碼%<br />
-                  色碼%<br />
-                  色碼%<br />
-                </td>
-                <td>
-                  色碼%<br />
-                  色碼%<br />
-                  色碼%<br />
-                </td>
-                <td>
-                  <select class="btn btn-mini result_btn">
-                    <option selected disabled>照片風格</option>
-                    <option>正確</option>
-                    <option>待修正</option>
-                  </select>
-                </td>
-                <td>
-                  <button type="button" class="btn btn-success">儲存</button>
-                </td>
-              </tr> -->
-            </tbody>
-          </table>
-
-          <button
-            type="button"
-            class="btn btn-warning"
-            data-toggle="modal"
-            data-target="#color_definition"
-          >
-            定義描述＋
-          </button>
-
-          <div class="modal fade" id="color_definition">
-            <div
-              class="modal-dialog modal-dialog-centered modal-xl"
-              role="document"
-            >
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle">
-                    <button
-                      type="button"
-                      class="btn btn-info mr-4"
-                      :class="{'active' : photo_definition == 'photo'}"
-                      @click.prevent="photo_definition = 'photo'"
-                    >
-                      照片風格
-                    </button>
-                  </h5>
-                  <button
-                    type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div v-show="photo_definition == 'photo'" class="modal-body">
-                  <div class="table-responsive" v-show="gender == 'male_female'">
+                  <div v-show="definition == 'luxury'" class="modal-body">
                     <table
-                      id=""
                       class="definition_table table mt-4 table-hover"
                       style="word-break:break-all; word-wrap:break-all;"
                     >
-                      <thead>
-                        <tr>
-                          <th scope="col">風格</th>
-                          <th scope="col">描述</th>
-                        </tr>
-                      </thead>
                       <tbody>
                         <tr>
-                          <th scope="row">陽光朝氣</th>
+                          <th scope="row" style="width: 10%;">服飾品牌</th>
                           <td>
-                            中性色、彩度高、色彩飽和、中明度、室外、白天、陽光、植物、藍天白雲、海
+                            CHANEL香奈兒/Dior迪奧/Armani阿瑪尼/Givenchy紀梵希/Versace范思哲/Burberry博柏利/Gucci古馳/LV路易威登/Prada普拉達/Valentino華倫天奴
                           </td>
                         </tr>
                         <tr>
-                          <th scope="row">鮮豔華麗</th>
+                          <th scope="row">包包品牌</th>
                           <td>
-                            中性色、彩度高、色彩明暗鮮明、高明度、室內、夜晚
+                            愛馬仕（Hermès）/路易威登（LV）/香奈兒（
+                            CHANEL）/普拉達（PRADA）/葆蝶家（BottegaVeneta）/芬迪(Fendi)/
+                            古馳（
+                            Gucci）/迪奧（Dior）/巴黎世家（BALENCIAGA）/寇馳（COACH）
                           </td>
                         </tr>
                         <tr>
-                          <th scope="row">夢幻可愛</th>
-                          <td>中彩度、低明度</td>
+                          <th scope="row">汽車品牌</th>
+                          <td>
+                            保時捷（Porsche）/邁巴赫（德文：Maybach）/梅賽德斯-奔馳（Mercedes-Benz）/瑪莎拉蒂/賓利/勞斯萊斯/阿斯頓·馬丁（AstonMartin）/法拉利/藍寶堅尼/布加迪
+                          </td>
                         </tr>
                         <tr>
-                          <th scope="row">小清新</th>
-                          <td>白色系、低彩度、低明度</td>
+                          <th scope="row">手錶品牌</th>
+                          <td>
+                            百達翡麗(Patek Philippe)/江詩丹頓(Vacheron
+                            Constantin)/愛彼(Audemars
+                            Piguet)/寶璣(Breguet)/萬國(IWC)/伯爵(Piaget)/
+                            卡地亞(Cartier)/積傢(Jaeger-LeCoultre)/勞力士(Rolex)/芝柏(Girard-Perregaux)
+                          </td>
                         </tr>
                         <tr>
-                          <th scope="row">質感冷調</th>
-                          <td>白色系、冷色系、低彩度、高明度</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">秋天暖色</th>
-                          <td>黃、土、咖啡色系、低彩度、低明度</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">復古懷舊</th>
-                          <td>黃、土、咖啡色系、低彩度、高明度</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">黑白文藝</th>
-                          <td>黑白照片</td>
+                          <th scope="row">珠寶品牌</th>
+                          <td>
+                            卡地亞(Cartier)/戴瑞(Darry Ring)
+                            /蒂芬尼(Tiffany&Co)/寶格麗(Bvlgari)/梵克雅寶VanCleef&Arpels/海瑞溫斯頓HarryWinston/
+                            蒂爵(DERIER)/德米亞尼(Damiani)/寶詩龍(Boucheron)/御木本(MIKIMOTO)
+                          </td>
                         </tr>
                       </tbody>
                     </table>
-                    <p class="definition_table_notion">
-                      備註：除了色系之外，輔以亮度(明暗)與色彩飽和度(深淺)作為歸類。
-                    </p>
+                  </div>
+
+                  <div v-show="definition == 'brand'" class="modal-body">
+                    brand
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /定義描述 -->
+          </div>
+          <!-- /人物物件校正 -->
+
+          <!-- 色彩校正 -->
+          <div class="col-sm-12" v-show="link == 'color'">
+            <table class=" rwd-table table table-borderless center">
+              <thead>
+                <tr>
+                  <th scope="col">KOL_ID</th>
+                  <th scope="col">圖片</th>
+                  <th scope="col">照片風格</th>
+                  <th scope="col">辨識結果RGB</th>
+                  <th scope="col">修正結果</th>
+                </tr>
+              </thead>
+              <tbody id="color" class="character">
+                <!-- <tr>
+              <th scope="row">A001</th>
+              <td>滴妹</td>
+              <td>
+                <a href="img/c.jpg" data-toggle="lightbox">
+                  <img
+                    src="img/c.jpg"
+                    class="img-fluid rounded"
+                    style="max-width: 200px;"
+                  />
+                </a>
+              </td>
+              <td class="recognition_result">
+                陽光朝氣
+              </td>
+              <td>
+                色碼%<br />
+                色碼%<br />
+                色碼%<br />
+              </td>
+              <td>
+                色碼%<br />
+                色碼%<br />
+                色碼%<br />
+              </td>
+              <td>
+                <select class="btn btn-mini result_btn">
+                  <option selected disabled>照片風格</option>
+                  <option>正確</option>
+                  <option>待修正</option>
+                </select>
+              </td>
+              <td>
+                <button type="button" class="btn btn-success">儲存</button>
+              </td>
+            </tr> -->
+                <!-- <tr>
+              <th scope="row">A002</th>
+              <td>
+                <a href="img/d.jpg" data-toggle="lightbox">
+                  <img
+                    src="img/d.jpg"
+                    class="img-fluid rounded"
+                    style="max-width: 200px;"
+                  />
+                </a>
+              </td>
+              <td class="recognition_result">
+                陽光朝氣
+              </td>
+              <td>
+                色碼%<br />
+                色碼%<br />
+                色碼%<br />
+              </td>
+              <td>
+                色碼%<br />
+                色碼%<br />
+                色碼%<br />
+              </td>
+              <td>
+                <select class="btn btn-mini result_btn">
+                  <option selected disabled>照片風格</option>
+                  <option>正確</option>
+                  <option>待修正</option>
+                </select>
+              </td>
+              <td>
+                <button type="button" class="btn btn-success">儲存</button>
+              </td>
+            </tr> -->
+              </tbody>
+            </table>
+
+            <button
+              type="button"
+              class="btn btn-warning"
+              data-toggle="modal"
+              data-target="#color_definition"
+            >
+              定義描述＋
+            </button>
+
+            <div class="modal fade" id="color_definition">
+              <div
+                class="modal-dialog modal-dialog-centered modal-xl"
+                role="document"
+              >
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">
+                      <button
+                        type="button"
+                        class="btn btn-info mr-4"
+                        :class="{'active' : photo_definition == 'photo'}"
+                        @click.prevent="photo_definition = 'photo'"
+                      >
+                        照片風格
+                      </button>
+                    </h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div v-show="photo_definition == 'photo'" class="modal-body">
+                    <div
+                      class="table-responsive"
+                      v-show="gender == 'male_female'"
+                    >
+                      <table
+                        id=""
+                        class="definition_table table mt-4 table-hover"
+                        style="word-break:break-all; word-wrap:break-all;"
+                      >
+                        <thead>
+                          <tr>
+                            <th scope="col">風格</th>
+                            <th scope="col">描述</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">陽光朝氣</th>
+                            <td>
+                              中性色、彩度高、色彩飽和、中明度、室外、白天、陽光、植物、藍天白雲、海
+                            </td>
+                          </tr>
+                          <tr>
+                            <th scope="row">鮮豔華麗</th>
+                            <td>
+                              中性色、彩度高、色彩明暗鮮明、高明度、室內、夜晚
+                            </td>
+                          </tr>
+                          <tr>
+                            <th scope="row">夢幻可愛</th>
+                            <td>中彩度、低明度</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">小清新</th>
+                            <td>白色系、低彩度、低明度</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">質感冷調</th>
+                            <td>白色系、冷色系、低彩度、高明度</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">秋天暖色</th>
+                            <td>黃、土、咖啡色系、低彩度、低明度</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">復古懷舊</th>
+                            <td>黃、土、咖啡色系、低彩度、高明度</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">黑白文藝</th>
+                            <td>黑白照片</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <p class="definition_table_notion">
+                        備註：除了色系之外，輔以亮度(明暗)與色彩飽和度(深淺)作為歸類。
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <!-- /色彩校正 -->
+
+          <!-- 品牌校正 -->
+          <div class="col-sm-12" v-show="link == 'brand'">
+            <table class=" rwd-table table table-borderless center">
+              <thead>
+                <tr>
+                  <th scope="col">KOL_Name</th>
+                  <th scope="col">圖片</th>
+                  <th scope="col">照片風格</th>
+                  <th scope="col">修正結果</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody id="brand" class="brand">
+                <!-- <tr>
+              <th scope="row">A001</th>
+              <td>滴妹</td>
+              <td>
+                <a href="img/c.jpg" data-toggle="lightbox">
+                  <img
+                    src="img/c.jpg"
+                    class="img-fluid rounded"
+                    style="max-width: 200px;"
+                  />
+                </a>
+              </td>
+              <td class="recognition_result">
+                陽光朝氣
+              </td>
+              <td>
+                色碼%<br />
+                色碼%<br />
+                色碼%<br />
+              </td>
+              <td>
+                色碼%<br />
+                色碼%<br />
+                色碼%<br />
+              </td>
+              <td>
+                <select class="btn btn-mini result_btn">
+                  <option selected disabled>照片風格</option>
+                  <option>正確</option>
+                  <option>待修正</option>
+                </select>
+              </td>
+              <td>
+                <button type="button" class="btn btn-success">儲存</button>
+              </td>
+            </tr> -->
+                <!-- <tr>
+              <th scope="row">A002</th>
+              <td>
+                <a href="img/d.jpg" data-toggle="lightbox">
+                  <img
+                    src="img/d.jpg"
+                    class="img-fluid rounded"
+                    style="max-width: 200px;"
+                  />
+                </a>
+              </td>
+              <td class="recognition_result">
+                陽光朝氣
+              </td>
+              <td>
+                色碼%<br />
+                色碼%<br />
+                色碼%<br />
+              </td>
+              <td>
+                色碼%<br />
+                色碼%<br />
+                色碼%<br />
+              </td>
+              <td>
+                <select class="btn btn-mini result_btn">
+                  <option selected disabled>照片風格</option>
+                  <option>正確</option>
+                  <option>待修正</option>
+                </select>
+              </td>
+              <td>
+                <button type="button" class="btn btn-success">儲存</button>
+              </td>
+            </tr> -->
+              </tbody>
+            </table>
+            <div class="row">
+              <div class="col-md-4 offset-md-4 text-center brand_total"></div>
+
+              <div class="col-md-4 text-right">
+                <button
+                  id="brand_nextPage"
+                  type="button"
+                  class="btn btn-primary"
+                >
+                  下一頁
+                </button>
+              </div>
+            </div>
+            <!-- <button
+          type="button"
+          class="btn btn-warning"
+          data-toggle="modal"
+          data-target="#color_definition"
+        >
+          定義描述＋
+        </button> -->
+
+            <!-- <div class="modal fade" id="color_definition">
+          <div
+            class="modal-dialog modal-dialog-centered modal-xl"
+            role="document"
+          >
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">
+                  <button
+                    type="button"
+                    class="btn btn-info mr-4"
+                    :class="{'active' : photo_definition == 'photo'}"
+                    @click.prevent="photo_definition = 'photo'"
+                  >
+                    照片風格
+                  </button>
+                </h5>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div v-show="photo_definition == 'photo'" class="modal-body">
+                <div class="table-responsive" v-show="gender == 'male_female'">
+                  <table
+                    id=""
+                    class="definition_table table mt-4 table-hover"
+                    style="word-break:break-all; word-wrap:break-all;"
+                  >
+                    <thead>
+                      <tr>
+                        <th scope="col">風格</th>
+                        <th scope="col">描述</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">陽光朝氣</th>
+                        <td>
+                          中性色、彩度高、色彩飽和、中明度、室外、白天、陽光、植物、藍天白雲、海
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">鮮豔華麗</th>
+                        <td>
+                          中性色、彩度高、色彩明暗鮮明、高明度、室內、夜晚
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">夢幻可愛</th>
+                        <td>中彩度、低明度</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">小清新</th>
+                        <td>白色系、低彩度、低明度</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">質感冷調</th>
+                        <td>白色系、冷色系、低彩度、高明度</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">秋天暖色</th>
+                        <td>黃、土、咖啡色系、低彩度、低明度</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">復古懷舊</th>
+                        <td>黃、土、咖啡色系、低彩度、高明度</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">黑白文藝</th>
+                        <td>黑白照片</td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+
+                  <p class="definition_table_notion">
+                    備註：除了色系之外，輔以亮度(明暗)與色彩飽和度(深淺)作為歸類。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+          </div>
+          <!-- /品牌校正 -->
         </div>
-        <!-- /色彩校正 -->
       </div>
     </div>
-
     <!-- Footer -->
     <footer class="py-5 bg-dark">
       <div class="row center white">
@@ -1045,6 +1361,13 @@
           photo_definition: "photo"
         }
       });
+
+      var nav = new Vue({
+        el: "#nav",
+        data: {
+          navTime: "character"
+        }
+      });
     </script>
 
     <script>
@@ -1053,10 +1376,30 @@
         $(this).ekkoLightbox();
       });
     </script>
-    
+
     <script>
-      var jwt = localStorage.getItem('token');
+      var jwt = localStorage.getItem("token");
       var ip = "http://api.i-buzz-system.com";
+
+      // $(".btn-outline-primary").click(function() {
+      //   if ($("#character_btn.active")) {
+      //     $(".colorTime").hide();
+      //     $(".brandTime").hide();
+
+      //     $(".characterTime").show();
+      //   }
+      //   if ($("#color_btn.active")) {
+      //     $(".characterTime").hide();
+      //     $(".brandTime").hide();
+
+      //     $(".colorTime").show();
+      //   }
+      //   if ($("#brand_btn.active")) {
+      //     $(".brandTime").show();
+      //     $(".characterTime").hide();
+      //     $(".colorTime").hide();
+      //   }
+      // });
 
       // //設定人物校正時間區間
       // $("#character_search").click(function() {
@@ -1147,7 +1490,6 @@
       //   var pic_id = $("#pic_id").val();
       //   console.log(send_character_style,send_life_style,send_character_gender,pic_id)
 
-
       //   $.ajax({
       //   url: "http://api.i-buzz.com.tw/img-recognition/style_modify",
       //   type: "GET",
@@ -1165,18 +1507,13 @@
       //   }
       // });
       // });
-      
 
       //結束傳送風格辨識結果
 
+      //左上角userName
+      $(".userName").html(localStorage.getItem("userName"));
 
-
-
-        //左上角userName
-        $('.userName').html(localStorage.getItem('userName'))
-
-
-        //end左上角userName
+      //end左上角userName
 
       //設定色彩校正時間區間
       $("#color_search").click(function() {
@@ -1199,7 +1536,7 @@
         console.log(color_data);
 
         $.ajax({
-          url: ip+"/img-recognition/color_recongition",
+          url: ip + "/img-recognition/color_recongition",
           type: "POST",
           headers: {
             Authorization: "Bearer " + jwt
@@ -1239,8 +1576,6 @@
           }
         });
       });
-
-      
     </script>
   </body>
 </html>
