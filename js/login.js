@@ -360,7 +360,7 @@ $(document).ready(function () {
 
     },
     success: function (data) {
-      console.log("BRAND Local Storage尚無資料");
+      console.log("BRAND Local Storage取得資料成功");
       brand_total = '<p >共 5 / ' + data.count + '</p>';
       // console.log(total);
       // localStorage.setItem("brand_start_date", brand_start_date);
