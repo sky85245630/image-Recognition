@@ -32,6 +32,7 @@ $(document).ready(function () {
   var ip = "http://api.i-buzz-system.com";
   var LS = life_style();
   var CS = character_style();
+  var BL = brand_list()
 
 
   var login = JSON.stringify({
@@ -381,14 +382,14 @@ $(document).ready(function () {
           data.data[i].pic_url +
           '" data-toggle="lightbox"> <img src="' +
           data.data[i].pic_url +
-          '" class="img-fluid rounded" style="max-width: 200px;"/> </a> </td><td class="recognition_result"> ' + data.data[i].brand + ' </td><td> 辨識結果QQ </td><td> <button id="brand_save" type="button" class="btn btn-success">儲存</button> </td></tr>';
+          '" class="img-fluid rounded" style="max-width: 200px;"/> </a> </td><td class="recognition_result"> ' + data.data[i].brand + ' </td><td>  <select id="brand_list" class="btn btn-mini result_btn"><option name="無法辨識結果" value="無法辨識結果">無法辨識結果</option>' + BL + '</select><input id="brand_pic_id" type="hidden" value="' + data.data[i].pic_id + '"> </td><td> <button id="brand_save" type="button" class="btn btn-success">儲存</button> </td></tr>';
 
         $("#brand").append(brand);
       }
       $('#brandTime').empty().append('時間區間：' + local_brand_start_date + ' ~ ' + local_brand_end_time)
       // $("#set_brand_data").modal("toggle");
       // window.location.reload();
-
+        brand_send();
       // $('#set_character_data').modal('hide');
     }
   });
@@ -708,7 +709,7 @@ $(document).ready(function () {
             data.data[i].pic_url +
             '" data-toggle="lightbox"> <img src="' +
             data.data[i].pic_url +
-            '" class="img-fluid rounded" style="max-width: 200px;"/> </a> </td><td class="recognition_result"> ' + data.data[i].brand + ' </td><td> 辨識結果QQ </td><td> <button id="brand_save" type="button" class="btn btn-success">儲存</button> </td></tr>';
+            '" class="img-fluid rounded" style="max-width: 200px;"/> </a> </td><td class="recognition_result"> ' + data.data[i].brand + ' </td><td> <select id="brand_list" class="btn btn-mini result_btn"><option name="無法辨識結果" value="無法辨識結果">無法辨識結果</option>' + BL + '</select><input id="brand_pic_id" type="hidden" value="' + data.data[i].pic_id + '"></td><td> <button id="brand_save" type="button" class="btn btn-success">儲存</button> </td></tr>';
 
 
           $("#brand").append(brand);
@@ -717,46 +718,7 @@ $(document).ready(function () {
         }
       $('#brandTime').empty().append('時間區間：' + local_brand_start_date + ' ~ ' + local_brand_end_time)
 
-
-        //   $("#brand_save").click(function() {
-
-        //     var send_character_style = $(this).parent().parent().find('#character_style option:selected').val();
-        //     var send_life_style = $(this).parent().parent().find('#life_style option:selected').val();
-        //     var send_character_gender = $(this).parent().parent().find('#character_gender option:selected').val();
-        //     var pic_id = $(this).parent().parent().find('#pic_id').val();
-        //     var modify_person = localStorage.getItem('userName');
-
-        //     console.log(send_character_style,send_life_style,send_character_gender,pic_id,modify_person);
-
-        //     var data = JSON.stringify({
-        //       imageid:pic_id,
-        //       life_style:send_life_style,
-        //       character_style:send_character_style,
-        //       gender:send_character_gender,
-        //       modify_person:modify_person
-        //     })
-        //     console.log(data);
-        //     $.ajax({
-        //     url: ip+"/img-recognition/style_modify",
-        //     type: "POST",
-        //     headers: {
-        //       Authorization: "Bearer " + jwt
-        //     },
-        //     data:data,
-        //      contentType: "application/json; charset=utf-8",
-        //     error: function(xhr) {
-        //       console.log("傳送風格辨識結果失敗");
-        //       console.log(xhr);
-        //     },
-        //     success: function(data) {
-        //       console.log("傳送風格辨識結果成功");
-        //       // console.log(data.character_style[1]);
-        //       console.log(data);
-        //       alert('修改成功')
-        //     }
-        //   });
-
-        // });
+            brand_send();
 
         $("#set_brand_data").modal("toggle");
         // window.location.reload();
@@ -765,5 +727,70 @@ $(document).ready(function () {
       }
     });
   });
+
+
+  //brand send function
+  function brand_send(){
+    $('#brand_save').click(function(){
+      var send_brand_style = $(this).parents().find('#brand_list option:selected').val();
+    var brand_pic_id = $(this).parents().find('#brand_pic_id').val();
+    var modify_person = localStorage.getItem('userName');
+
+    console.log(send_brand_style ,brand_pic_id,modify_person);
+
+    var data = JSON.stringify({
+      imageid:brand_pic_id,
+      brand:send_brand_style,
+      modify_person:modify_person
+    })
+    console.log(data);
+    $.ajax({
+    url: ip+"/img-recognition/brand_modify",
+    type: "POST",
+    headers: {
+      Authorization: "Bearer " + jwt
+    },
+    data:data,
+     contentType: "application/json; charset=utf-8",
+    error: function(xhr) {
+      console.log("傳送品牌辨識結果失敗");
+      console.log(xhr);
+    },
+    success: function(data) {
+      console.log("傳送品牌辨識結果成功");
+      // console.log(data.character_style[1]);
+      console.log(data);
+      alert('修改成功')
+    }
+  });
+    })
+  }
+
+  
+  //品牌列表
+  function brand_list() {
+    $.ajax({
+      url: "http://api.i-buzz-system.com/img-recognition/get_brands",
+      type: "GET",
+      headers: {
+        Authorization: "Bearer " + jwt
+      },
+      error: function (xhr) {
+        console.log("取得品牌列表失敗");
+        console.log(xhr)
+        window.location.reload();
+      },
+      success: function (data) {
+        console.log("取得品牌列表成功");
+        for (i = 0; i < data.data.length; i++) {
+          BL += '<option name="' + data.data[i] + '" value="' + data.data[i] + '">' + data.data[i] + '</option>'
+        }
+        // return BL;
+        // console.log(BL);
+
+      }
+    })
+
+  }
 
 })
