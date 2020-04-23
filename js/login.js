@@ -42,9 +42,9 @@ $(document).ready(function () {
 
   // $('#characterStartTime').append(local_character_start_date);
   // $('#characterEndTime').append(local_character_end_time);
-  $('#characterTime').append('時間區間：' + local_character_start_date + ' ~ ' + local_character_end_time)
-  $('#colorTime').append('時間區間：' + local_color_start_date + ' ~ ' + local_color_end_time)
-  $('#brandTime').append('時間區間：' + local_brand_start_date + ' ~ ' + local_brand_end_time)
+  $('#characterTime').empty().append('時間區間：' + local_character_start_date + ' ~ ' + local_character_end_time)
+  $('#colorTime').empty().append('時間區間：' + local_color_start_date + ' ~ ' + local_color_end_time)
+  $('#brandTime').empty().append('時間區間：' + local_brand_start_date + ' ~ ' + local_brand_end_time)
 
 
 
@@ -526,7 +526,7 @@ $(document).ready(function () {
           //   console.log( character )  
         }
 
-        $('#characterTime').append('時間區間：' + local_character_start_date + ' ~ ' + local_character_end_time)
+        $('#characterTime').empty().append('時間區間：' + local_character_start_date + ' ~ ' + local_character_end_time)
 
         $(".btn-success").click(function () {
 
