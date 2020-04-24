@@ -381,7 +381,8 @@ $(document).ready(function () {
                     total = '<p >共 ' + data.data.length + ' / ' + data.count + '</p>';
                     console.log(total);
                     $('.total').empty().append(total);
-
+                    console.log(data.data.length)
+                    $("#character").empty()
                     for (i = 0; i < data.data.length; i++) {
                         character =
                             "<tr> <td>" +
@@ -408,7 +409,7 @@ $(document).ready(function () {
 
 
 
-                        $("#character").empty().append(character);
+                        $("#character").append(character);
                         //   console.log(data.character_style[i])
                         //   console.log( character )
 
