@@ -134,7 +134,7 @@ $(document).ready(function () {
                     LS +
                     ' </select ><br/> <select id="character_gender" class="btn btn-mini result_btn"> <option selected disabled>' +
                     data.data[i].gender +
-                    '</option ><option name="male" value="male">male</option ><option name="female" value="female">female</option><option name="無辨識結果" value="無辨識結果">無辨識結果</option> </select ><input id="pic_id" type="hidden" value="' + data.data[i].pic_id + '"><br/> </td><td> <button id="character_save" type="button" class="btn btn-success">儲存</button> </td></tr>';
+                    '</option ><option name="male" value="male">male</option ><option name="female" value="female">female</option><option name="無辨識結果" value="無辨識結果">無辨識結果</option> </select ><input id="pic_id" type="hidden" value="' + data.data[i].pic_id + '"><br/> </td><td> <button id="character_save" type="button" class="btn btn-success btn-character">儲存</button> </td></tr>';
 
 
 
@@ -147,7 +147,7 @@ $(document).ready(function () {
             $('#characterTime').empty().append('時間區間：' + local_character_start_date + ' ~ ' + local_character_end_time)
 
 
-            $(".btn-success").click(function () {
+            $(".btn-character").click(function () {
 
                 var send_character_style = $(this).parent().parent().find('#character_style option:selected').val();
                 var send_life_style = $(this).parent().parent().find('#life_style option:selected').val();
@@ -267,7 +267,7 @@ $(document).ready(function () {
                         data.data[i].gender +
                         '</option ><option name="male" value="male">male</option ><option name="female" value="female">female</option><option name="無辨識結果" value="無辨識結果">無辨識結果</option> </select ><input id="pic_id" type="hidden" value="' +
                         data.data[i].pic_id +
-                        '"><br/> </td><td> <button id="character_save" type="button" class="btn btn-success">儲存</button> </td></tr>';
+                        '"><br/> </td><td> <button id="character_save" type="button" class="btn btn-success btn-character">儲存</button> </td></tr>';
 
 
                     $("#character").append(character);
@@ -277,7 +277,7 @@ $(document).ready(function () {
 
                 $('#characterTime').empty().append('時間區間：' + local_character_start_date + ' ~ ' + local_character_end_time)
 
-                $(".btn-success").click(function () {
+                $(".btn-character").click(function () {
 
                     var send_character_style = $(this).parent().parent().find('#character_style option:selected').val();
                     var send_life_style = $(this).parent().parent().find('#life_style option:selected').val();
@@ -404,7 +404,7 @@ $(document).ready(function () {
                             LS +
                             ' </select ><br/> <select id="character_gender" class="btn btn-mini result_btn"> <option selected disabled>' +
                             data.data[i].gender +
-                            '</option ><option name="male" value="male">male</option ><option name="female" value="female">female</option><option name="無辨識結果" value="無辨識結果">無辨識結果</option> </select ><input id="pic_id" type="hidden" value="' + data.data[i].pic_id + '"><br/> </td><td> <button id="character_save" type="button" class="btn btn-success">儲存</button> </td></tr>';
+                            '</option ><option name="male" value="male">male</option ><option name="female" value="female">female</option><option name="無辨識結果" value="無辨識結果">無辨識結果</option> </select ><input id="pic_id" type="hidden" value="' + data.data[i].pic_id + '"><br/> </td><td> <button id="character_save" type="button" class="btn btn-success btn-character">儲存</button> </td></tr>';
 
 
 
@@ -417,7 +417,7 @@ $(document).ready(function () {
                     $('#characterTime').empty().append('時間區間：' + local_character_start_date + ' ~ ' + local_character_end_time)
 
 
-                    $(".btn-success").click(function () {
+                    $(".btn-character").click(function () {
 
                         var send_character_style = $(this).parent().parent().find('#character_style option:selected').val();
                         var send_life_style = $(this).parent().parent().find('#life_style option:selected').val();
@@ -461,6 +461,9 @@ $(document).ready(function () {
             });
 
             //結束拉出local Storage資料顯示在畫面上CHARACTER
+
+
+
 
         }
 

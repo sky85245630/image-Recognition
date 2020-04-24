@@ -58,14 +58,16 @@ $(document).ready(function () {
                     data.data[i].pic_url +
                     '" data-toggle="lightbox"> <img src="' +
                     data.data[i].pic_url +
-                    '" class="img-fluid rounded" style="max-width: 200px;"/> </a> </td><td class="recognition_result"> ' + data.data[i].brand + ' </td><td>  <select id="brand_list" class="btn btn-mini result_btn"><option name="無法辨識結果" value="無法辨識結果">無法辨識結果</option>' + BL + '</select><input id="brand_pic_id" type="hidden" value="' + data.data[i].pic_id + '"> </td><td> <button id="brand_save" type="button" class="btn btn-success">儲存</button> </td></tr>';
+                    '" class="img-fluid rounded" style="max-width: 200px;"/> </a> </td><td class="recognition_result"> ' + data.data[i].brand + ' </td><td>  <select id="brand_list" class="btn btn-mini result_btn"><option name="無法辨識結果" value="無法辨識結果">無法辨識結果</option>' + BL + '</select><input id="brand_pic_id" type="hidden" value="' + data.data[i].pic_id + '"> </td><td> <button id="brand_save" type="button" class="btn btn-success btn-brand">儲存</button> </td></tr>';
 
                 $("#brand").append(brand);
+
             }
             $('#brandTime').empty().append('時間區間：' + local_brand_start_date + ' ~ ' + local_brand_end_time)
+            brand_send();
+
             // $("#set_brand_data").modal("toggle");
             // window.location.reload();
-            brand_send();
             // $('#set_character_data').modal('hide');
         }
     });
@@ -138,7 +140,7 @@ $(document).ready(function () {
                         data.data[i].pic_url +
                         '" data-toggle="lightbox"> <img src="' +
                         data.data[i].pic_url +
-                        '" class="img-fluid rounded" style="max-width: 200px;"/> </a> </td><td class="recognition_result"> ' + data.data[i].brand + ' </td><td> <select id="brand_list" class="btn btn-mini result_btn"><option name="無法辨識結果" value="無法辨識結果">無法辨識結果</option>' + BL + '</select><input id="brand_pic_id" type="hidden" value="' + data.data[i].pic_id + '"></td><td> <button id="brand_save" type="button" class="btn btn-success">儲存</button> </td></tr>';
+                        '" class="img-fluid rounded" style="max-width: 200px;"/> </a> </td><td class="recognition_result"> ' + data.data[i].brand + ' </td><td> <select id="brand_list" class="btn btn-mini result_btn"><option name="無法辨識結果" value="無法辨識結果">無法辨識結果</option>' + BL + '</select><input id="brand_pic_id" type="hidden" value="' + data.data[i].pic_id + '"></td><td> <button id="brand_save" type="button" class="btn btn-success btn-brand">儲存</button> </td></tr>';
 
 
                     $("#brand").append(brand);
@@ -164,7 +166,7 @@ $(document).ready(function () {
 
     //brand send function
     function brand_send() {
-        $('#brand_save').click(function () {
+        $('.btn-brand').click(function () {
             var send_brand_style = $(this).parents().find('#brand_list option:selected').val();
             var brand_pic_id = $(this).parents().find('#brand_pic_id').val();
             var modify_person = localStorage.getItem('userName');
@@ -227,4 +229,150 @@ $(document).ready(function () {
 
     }
     //end品牌列表
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    //先把預設的brand_page_num = 1
+    localStorage.setItem('brand_page_num', 1)
+
+
+    //人物辨識下一頁
+    $('#brand_nextPage').click(function () {
+        // window.location.reload();
+        var local_brand_modify_status = localStorage.getItem('modify_status') == "true" ? true : false
+        var brand_page_num = localStorage.getItem('brand_page_num')
+
+
+        //為辨識的資料reload()
+        if (local_brand_modify_status == false) {
+            window.location.reload();
+        }
+        //以辨識的資料->換頁
+        if (local_brand_modify_status == true) {
+            //按一下+1去下一頁
+            localStorage.setItem('brand_page_num', Number(character_page_num) + 1)
+
+
+            //拉出local BRAND
+
+            var brand_local_storage = JSON.stringify({
+                start_date: local_brand_start_date,
+                end_date: local_brand_end_time,
+                modify_status: local_brand_modify_status,
+                page_num: Number(brand_page_num)+1
+            });
+            console.log(storage)
+            
+                
+    $.ajax({
+        url: ip + "/img-recognition/brand_recongition",
+        type: "POST",
+        headers: {
+            Authorization: "Bearer " + jwt
+        },
+        data: brand_local_storage,
+        contentType: "application/json; charset=utf-8",
+        error: function (xhr) {
+            console.log("BRAND 下一頁 Storage尚無資料");
+
+            console.log(xhr);
+            console.log(brand_local_storage)
+            // window.location.reload();
+
+        },
+        success: function (data) {
+            console.log("BRAND 下一頁 Storage取得資料成功");
+            brand_total = '<p >共 '+ data.data.length +' / ' + data.count + '</p>';
+            // console.log(total);
+            // localStorage.setItem("brand_start_date", brand_start_date);
+            // localStorage.setItem("brand_end_date", brand_end_date);
+            // localStorage.setItem("brand_modify_status", brand_modify_status);
+            // console.log(data.character_style[1]);
+            console.log(data);
+            // console.log(data.data[0].kol_id);
+            $("#brand").empty();
+            $(".brand_total").empty();
+            $('.brand_total').append(brand_total);
+
+            for (i = 0; i < data.data.length; i++) {
+                brand =
+                    "<tr> <td>" +
+                    data.data[i].kol_name +
+                    '</td><td> <a href="' +
+                    data.data[i].pic_url +
+                    '" data-toggle="lightbox"> <img src="' +
+                    data.data[i].pic_url +
+                    '" class="img-fluid rounded" style="max-width: 200px;"/> </a> </td><td class="recognition_result"> ' + data.data[i].brand + ' </td><td>  <select id="brand_list" class="btn btn-mini result_btn"><option name="無法辨識結果" value="無法辨識結果">無法辨識結果</option>' + BL + '</select><input id="brand_pic_id" type="hidden" value="' + data.data[i].pic_id + '"> </td><td> <button id="brand_save" type="button" class="btn btn-success btn-brand">儲存</button> </td></tr>';
+
+                $("#brand").append(brand);
+            }
+            $('#brandTime').empty().append('時間區間：' + local_brand_start_date + ' ~ ' + local_brand_end_time)
+            // $("#set_brand_data").modal("toggle");
+            // window.location.reload();
+            brand_send();
+            // $('#set_character_data').modal('hide');
+        }
+    });
+
+            //結束拉出local Storage資料顯示在畫面上BRAND
+        }
+
+
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 })
