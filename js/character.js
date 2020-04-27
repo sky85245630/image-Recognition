@@ -42,6 +42,7 @@ $(document).ready(function () {
         })
 
     }
+    //end生活風格列表
 
 
     //人物風格列表
@@ -77,6 +78,52 @@ $(document).ready(function () {
         })
 
     }
+    //end人物風格列表
+
+    //儲存人物辨識資料
+    function save_character(){
+        $(".btn-character").click(function () {
+
+            var send_character_style = $(this).parent().parent().find('#character_style option:selected').val();
+            var send_life_style = $(this).parent().parent().find('#life_style option:selected').val();
+            var send_character_gender = $(this).parent().parent().find('#character_gender option:selected').val();
+            var pic_id = $(this).parent().parent().find('#pic_id').val();
+            var modify_person = localStorage.getItem('userName');
+    
+            console.log(send_character_style, send_life_style, send_character_gender, pic_id, modify_person);
+            var data = JSON.stringify({
+                imageid: pic_id,
+                life_style: send_life_style,
+                character_style: send_character_style,
+                gender: send_character_gender,
+                modify_person: modify_person
+            })
+            console.log(data);
+            $.ajax({
+                url: ip + "/img-recognition/style_modify",
+                type: "POST",
+                headers: {
+                    Authorization: "Bearer " + jwt
+                },
+                data: data,
+                contentType: "application/json; charset=utf-8",
+                error: function (xhr) {
+                    console.log("傳送風格辨識結果失敗");
+                    console.log(xhr);
+                },
+                success: function (data) {
+                    console.log("傳送風格辨識結果成功");
+                    // console.log(data.character_style[1]);
+                    console.log(data);
+                    alert('修改成功')
+                }
+            });
+    
+        });
+    }
+    //end儲存人物辨識資料
+
+    
 
 
 
@@ -108,7 +155,7 @@ $(document).ready(function () {
             console.log("CHARACTERs Local Storage取得成功");
             // console.log(data.character_style[1]);
             console.log(data);
-            total = '<p >共 5 / ' + data.count + '</p>';
+            total = '<p >第 5 / ' + data.count + '</p>';
             console.log(total);
             $('.total').append(total);
 
@@ -146,45 +193,8 @@ $(document).ready(function () {
             }
             $('#characterTime').empty().append('時間區間：' + local_character_start_date + ' ~ ' + local_character_end_time)
 
-
-            $(".btn-character").click(function () {
-
-                var send_character_style = $(this).parent().parent().find('#character_style option:selected').val();
-                var send_life_style = $(this).parent().parent().find('#life_style option:selected').val();
-                var send_character_gender = $(this).parent().parent().find('#character_gender option:selected').val();
-                var pic_id = $(this).parent().parent().find('#pic_id').val();
-                var modify_person = localStorage.getItem('userName');
-
-                console.log(send_character_style, send_life_style, send_character_gender, pic_id, modify_person);
-                var data = JSON.stringify({
-                    imageid: pic_id,
-                    life_style: send_life_style,
-                    character_style: send_character_style,
-                    gender: send_character_gender,
-                    modify_person: modify_person
-                })
-                console.log(data);
-                $.ajax({
-                    url: ip + "/img-recognition/style_modify",
-                    type: "POST",
-                    headers: {
-                        Authorization: "Bearer " + jwt
-                    },
-                    data: data,
-                    contentType: "application/json; charset=utf-8",
-                    error: function (xhr) {
-                        console.log("傳送風格辨識結果失敗");
-                        console.log(xhr);
-                    },
-                    success: function (data) {
-                        console.log("傳送風格辨識結果成功");
-                        // console.log(data.character_style[1]);
-                        console.log(data);
-                        alert('修改成功')
-                    }
-                });
-
-            });
+            save_character();
+            
 
             // $('#set_character_data').modal('hide');
         }
@@ -229,7 +239,7 @@ $(document).ready(function () {
             },
             success: function (data) {
                 console.log("傳送人物校正時間區間成功OOOOO");
-                total = '<p >共 5 / ' + data.count + '</p>';
+                total = '<p >第 5 / ' + data.count + '</p>';
                 console.log(total);
                 localStorage.setItem("character_start_date", character_start_date);
                 localStorage.setItem("character_end_time", character_end_time);
@@ -277,45 +287,8 @@ $(document).ready(function () {
 
                 $('#characterTime').empty().append('時間區間：' + local_character_start_date + ' ~ ' + local_character_end_time)
 
-                $(".btn-character").click(function () {
+                save_character();
 
-                    var send_character_style = $(this).parent().parent().find('#character_style option:selected').val();
-                    var send_life_style = $(this).parent().parent().find('#life_style option:selected').val();
-                    var send_character_gender = $(this).parent().parent().find('#character_gender option:selected').val();
-                    var pic_id = $(this).parent().parent().find('#pic_id').val();
-                    var modify_person = localStorage.getItem('userName');
-
-                    console.log(send_character_style, send_life_style, send_character_gender, pic_id, modify_person);
-
-                    var data = JSON.stringify({
-                        imageid: pic_id,
-                        life_style: send_life_style,
-                        character_style: send_character_style,
-                        gender: send_character_gender,
-                        modify_person: modify_person
-                    })
-                    console.log(data);
-                    $.ajax({
-                        url: ip + "/img-recognition/style_modify",
-                        type: "POST",
-                        headers: {
-                            Authorization: "Bearer " + jwt
-                        },
-                        data: data,
-                        contentType: "application/json; charset=utf-8",
-                        error: function (xhr) {
-                            console.log("傳送風格辨識結果失敗");
-                            console.log(xhr);
-                        },
-                        success: function (data) {
-                            console.log("傳送風格辨識結果成功");
-                            // console.log(data.character_style[1]);
-                            console.log(data);
-                            alert('修改成功')
-                        }
-                    });
-
-                });
 
                 $("#set_character_data").modal("toggle");
                 // window.location.reload();
@@ -375,10 +348,12 @@ $(document).ready(function () {
                 },
                 success: function (data) {
 
-                    console.log("CHARACTERs Local Storage取得成功");
+                    console.log("CHARACTER Local Storage取得成功");
                     // console.log(data.character_style[1]);
-                    console.log(data);
-                    total = '<p >共 ' + data.data.length + ' / ' + data.count + '</p>';
+                    console.log(data.data.length);
+                    console.log(typeof(data.data.length));
+
+                    total = '<p >第 ' + Number(character_page_num*5+data.data.length) + ' / ' + data.count + '</p>';
                     console.log(total);
                     $('.total').empty().append(total);
                     console.log(data.data.length)
@@ -418,44 +393,8 @@ $(document).ready(function () {
                     $('#characterTime').empty().append('時間區間：' + local_character_start_date + ' ~ ' + local_character_end_time)
 
 
-                    $(".btn-character").click(function () {
+                    save_character();
 
-                        var send_character_style = $(this).parent().parent().find('#character_style option:selected').val();
-                        var send_life_style = $(this).parent().parent().find('#life_style option:selected').val();
-                        var send_character_gender = $(this).parent().parent().find('#character_gender option:selected').val();
-                        var pic_id = $(this).parent().parent().find('#pic_id').val();
-                        var modify_person = localStorage.getItem('userName');
-
-                        console.log(send_character_style, send_life_style, send_character_gender, pic_id, modify_person);
-                        var data = JSON.stringify({
-                            imageid: pic_id,
-                            life_style: send_life_style,
-                            character_style: send_character_style,
-                            gender: send_character_gender,
-                            modify_person: modify_person
-                        })
-                        console.log(data);
-                        $.ajax({
-                            url: ip + "/img-recognition/style_modify",
-                            type: "POST",
-                            headers: {
-                                Authorization: "Bearer " + jwt
-                            },
-                            data: data,
-                            contentType: "application/json; charset=utf-8",
-                            error: function (xhr) {
-                                console.log("傳送風格辨識結果失敗");
-                                console.log(xhr);
-                            },
-                            success: function (data) {
-                                console.log("傳送風格辨識結果成功");
-                                // console.log(data.character_style[1]);
-                                console.log(data);
-                                alert('修改成功')
-                            }
-                        });
-
-                    });
 
                     // $('#set_character_data').modal('hide');
                 }
