@@ -1,5 +1,4 @@
 
-
 $(document).ready(function () {
   var jwt = localStorage.getItem('token');
   var innerTool_token = localStorage.getItem('innerTool_token');
@@ -60,8 +59,5 @@ $(document).ready(function () {
       console.log("登入成功");
     }
   });
-
-
-
 
 })
