@@ -90,6 +90,7 @@ var login = JSON.stringify({
 
     $("#login").click(function() {
       var userName = $('#username').val();
+      var userPwd = $('#password').val();
       var result = $.ajax({
         url: "http://3.0.202.119:8080/api/v2/login",
         type: "POST",
@@ -100,7 +101,12 @@ var login = JSON.stringify({
         success: function(data) {
           console.log(data);
           localStorage.setItem("innerTool_token", data.token);
-          localStorage.setItem("userName",userName)
+          localStorage.setItem("userName",userName);
+          //新增帳密到sessionStorage
+          sessionStorage.setItem("userName",userName);
+          sessionStorage.setItem("userPwd",userPwd);
+
+
           // localStorage.setItem("owner_id", data.owner_id);
           // localStorage.setItem("is_admin", data.is_admin);
           window.location.href = "index.html";

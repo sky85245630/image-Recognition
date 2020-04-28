@@ -4,6 +4,9 @@ $(document).ready(function () {
   var innerTool_token = localStorage.getItem('innerTool_token');
   var innerTool_jwt = localStorage.getItem('innerTool_token');
   var ip = "http://api.i-buzz-system.com";
+  var sessionUserName = sessionStorage.getItem('userName');
+  var sessionUserPwd = sessionStorage.getItem('userPwd');
+
 
 
   var login = JSON.stringify({
@@ -50,13 +53,42 @@ $(document).ready(function () {
     },
     error: function (xhr) {
       console.log("登入失敗，請重新登入");
-
+            //若失敗重新執行login動作，並存入sessionStorage
+            $.ajax({
+              url: "http://3.0.202.119:8080/api/v2/login",
+              type: "POST",
+              data: { userid: sessionUserName, userpwd: sessionUserPwd },
+              error: function(xhr) {
+                alert("check_token_expired login 錯誤");
+                window.location.href = "login.html";
+              },
+              success: function(data) {
+                localStorage.setItem("innerTool_token", data.token);
+                        //並執行check_token
+                        $.ajax({
+                          url: "http://3.0.202.119:8080/api/v2/check_token_expired",
+                          type: "GET",
+                          headers: {
+                            "Authorization": 'Bearer ' + innerTool_token
+                          },
+                          error: function (xhr) {
+                            console.log("登入失敗，請重新登入");
+                            
+                            console.log(xhr)
+                            // window.location.href = "login.html";
+                      
+                          },
+                          success: function (xhr) {
+                            console.log("登入成功");
+                          }
+                        });
+              }
+            });
       console.log(xhr)
-      window.location.href = "login.html";
-
+      // window.location.href = "login.html";
     },
     success: function (xhr) {
-      console.log("登入成功");
+      console.log("check_token_expired成功");
     }
   });
 
