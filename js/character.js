@@ -164,11 +164,15 @@ $(document).ready(function () {
 
     //拉出local Storage資料顯示在畫面上CHARACTER
 
+    //判斷是辨識過或未辨識過的資料
+    var check_recognition = local_modify_status == "true" ? character_page_num:1;
+
+
     var storage = JSON.stringify({
         start_date: local_character_start_date,
         end_date: local_character_end_time,
         modify_status: local_modify_status,
-        page_num: Number(character_page_num)
+        page_num: check_recognition
     });
 
     $.ajax({
@@ -583,19 +587,17 @@ $(document).ready(function () {
             data: storage,
             contentType: "application/json; charset=utf-8",
             error: function (xhr) {
-                console.log("CHARACTER Local Storage尚無資料");
+                console.log("total_page change取得失敗");
                 console.log(xhr);
                 // window.location.reload();
             },
             success: function (data) {
 
-                console.log("CHARACTER Local Storage取得成功");
-                // console.log(data.character_style[1]);
-                console.log(data.data.length);
-                console.log(typeof(data.data.length));
+                console.log("total_page change取得成功");
 
                 total = '<p >第 ' + data.num_of_data + ' / ' + data.count + '</p>';
-                console.log(total);
+                // console.log(total);
+
                 $('.total').empty().append(total);
                 console.log(data.data.length)
                 $("#character").empty()
