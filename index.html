@@ -109,6 +109,7 @@
             <div class="userName" style="display: contents;">QQ</div>
             <br />
             <div id="characterTime" v-show="link =='character'"></div>
+            <div id="pictureTime" v-show="link =='picture'"></div>
             <div id="colorTime" v-show="link == 'color'"></div>
             <div id="brandTime" v-show="link == 'brand'"></div>
           </div>
@@ -173,7 +174,7 @@
             </button>
             <!-- /人物物件校正btn -->
             <!-- 色彩校正btn -->
-            <button
+            <!-- <button
               id="color_btn"
               type="button"
               class="btn btn-outline-primary sm_row_margin"
@@ -181,8 +182,23 @@
               @click.prevent="link ='color'"
             >
               色彩校正
-            </button>
+            </button> -->
             <!-- /色彩校正btn -->
+
+
+            <!-- 圖片校正btn -->
+            <button
+              id="picture_btn"
+              type="button"
+              class="btn btn-outline-primary sm_row_margin"
+              :class="{'active' : link == 'picture'}"
+              @click.prevent="link ='picture'"
+            >
+            圖片校正
+            </button>
+            <!-- /圖片校正btn -->
+
+
 
             <!-- /品牌校正btn -->
             <button
@@ -365,6 +381,131 @@
             </div>
             <!-- /色彩校正 -->
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!-- 圖片校正選擇資料集 -->
+            <div v-show="link == 'picture'" style="display: contents;">
+              <button class="btn btn-danger col-sm-2 float-right">
+                匯出圖片校正照片
+              </button>
+              <div class="col-sm-2 float-right text-center">
+                <button
+                  type="button"
+                  class="btn btn-info"
+                  data-toggle="modal"
+                  data-target="#set_picture_data"
+                >
+                  設定時間區間
+                </button>
+                <!-- 設定色彩時間區間等Modal -->
+                <div class="modal fade" id="set_picture_data">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">設定圖片校正時間區間</h5>
+                        <button
+                          type="button"
+                          class="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div id="picture_region" class="modal-body">
+                        <table class="table table-borderless">
+                          <tbody>
+                            <tr>
+                              <th class="align-middle" scope="row">開始時間</th>
+                              <td>
+                                <input id="picture_start_date" type="date" />
+                              </td>
+                            </tr>
+                            <tr>
+                              <th class="align-middle" scope="row">結束時間</th>
+                              <td><input id="picture_end_time" type="date" /></td>
+                            </tr>
+                            <tr>
+                              <th class="align-middle" scope="row">顯示</th>
+                              <td>
+                                <input
+                                  type="radio"
+                                  name="picture_modify_status"
+                                  value="false"
+                                />未辨識的資料<br />
+                                <input
+                                  type="radio"
+                                  name="picture_modify_status"
+                                  value="true"
+                                />已辨識的資料
+                                <!-- 查詢頁數 -->
+                                <input
+                                  type="hidden"
+                                  name="page_num"
+                                  value="1"
+                                />
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          id="picture_search"
+                          type="button"
+                          class="btn btn-primary"
+                        >
+                          查詢
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /設定圖片時間區間等 -->
+            </div>
+            <!-- /圖片校正 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <!-- 品牌校正選擇資料集 -->
             <div v-show="link == 'brand'" style="display: contents;">
               <button class="btn btn-danger col-sm-2 float-right">
@@ -465,74 +606,7 @@
                 </tr>
               </thead>
               <tbody id="character" class="character">
-                <!-- <tr>
-              <td>滴妹</td>
-              <td>
-                <a href="img/a.jpg" data-toggle="lightbox">
-                  <img
-                    src="img/a.jpg"
-                    class="img-fluid rounded"
-                    style="max-width: 200px;"
-                  />
-                </a>
-              </td>
-              <td class="recognition_result">
-                人物風格：嘻哈潮流<br />
-                生活風格：嘻哈潮流<br />
-                性別：男<br />
-              </td>
-              <td>
-                <select id="character_style" class="btn btn-mini result_btn">
-                  <option selected disabled>人物風格</option> </select
-                ><br />
-                <select id="life_style" class="btn btn-mini result_btn">
-                  <option selected disabled>生活風格</option> </select
-                ><br />
-
-                <select id="character_gender" class="btn btn-mini result_btn">
-                  <option selected disabled>性別</option
-                  ><option name="男" value="男">男</option
-                  ><option name="女" value="女">女</option> </select
-                ><br />
-              </td>
-
-              <td>
-                <button id="BTN" type="button" class="btn btn-success">儲存</button>
-              </td>
-            </tr> -->
-                <!-- <tr>
-              <td>林志玲</td>
-              <td>
-                <a href="img/b.jpg" data-toggle="lightbox">
-                  <img
-                    src="img/b.jpg"
-                    class="img-fluid rounded"
-                    style="max-width: 200px;"
-                  />
-                </a>
-              </td>
-              <td class="recognition_result">
-                人物風格：嘻哈潮流<br />
-                生活風格：嘻哈潮流<br />
-                性別：男<br />
-              </td>
-              <td>
-                <select class="btn btn-mini result_btn">
-                  <option selected disabled>人物風格</option> </select
-                ><br />
-                <select class="btn btn-mini result_btn">
-                  <option selected disabled>生活風格</option> </select
-                ><br />
-
-                <select class="btn btn-mini result_btn">
-                  <option selected disabled>性別</option> </select
-                ><br />
-              </td>
-
-              <td>
-                <button type="button" class="btn btn-success">儲存</button>
-              </td>
-            </tr> -->
+               
               </tbody>
             </table>
             <!-- 定義描述 -->
@@ -547,12 +621,9 @@
                   定義描述＋
                 </button>
               </div>
-              <div class="col-md-3 text-center total">
+              <div class="col-md-4 text-center total">
+                <div class="total_page"></div>
               </div>
-              <div class="col-md-1">
-                <select name="" id="total_page"></select>
-              </div>
-
               <div class="col-md-4 text-right">
                 <button
                   id="character_prePage"
@@ -1143,6 +1214,181 @@
           </div>
           <!-- /色彩校正 -->
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <!--圖片校正 -->
+          <div class="col-sm-12" v-show="link == 'picture'">
+            <table class=" rwd-table table table-borderless center">
+              <thead>
+                <tr>
+                  <th scope="col">KOL_ID</th>
+                  <th scope="col">圖片</th>
+                  <th scope="col">照片風格</th>
+                  <th scope="col">辨識結果RGB</th>
+                  <th scope="col">修正結果</th>
+                </tr>
+              </thead>
+              <tbody id="picture" class="picture">
+                <!-- <tr>
+              <th scope="row">A001</th>
+              <td>滴妹</td>
+              <td>
+                <a href="img/c.jpg" data-toggle="lightbox">
+                  <img
+                    src="img/c.jpg"
+                    class="img-fluid rounded"
+                    style="max-width: 200px;"
+                  />
+                </a>
+              </td>
+              <td class="recognition_result">
+                陽光朝氣
+              </td>
+              <td>
+                色碼%<br />
+                色碼%<br />
+                色碼%<br />
+              </td>
+              <td>
+                色碼%<br />
+                色碼%<br />
+                色碼%<br />
+              </td>
+              <td>
+                <select class="btn btn-mini result_btn">
+                  <option selected disabled>照片風格</option>
+                  <option>正確</option>
+                  <option>待修正</option>
+                </select>
+              </td>
+              <td>
+                <button type="button" class="btn btn-success">儲存</button>
+              </td>
+            </tr> -->
+                <!-- <tr>
+              <th scope="row">A002</th>
+              <td>
+                <a href="img/d.jpg" data-toggle="lightbox">
+                  <img
+                    src="img/d.jpg"
+                    class="img-fluid rounded"
+                    style="max-width: 200px;"
+                  />
+                </a>
+              </td>
+              <td class="recognition_result">
+                陽光朝氣
+              </td>
+              <td>
+                色碼%<br />
+                色碼%<br />
+                色碼%<br />
+              </td>
+              <td>
+                色碼%<br />
+                色碼%<br />
+                色碼%<br />
+              </td>
+              <td>
+                <select class="btn btn-mini result_btn">
+                  <option selected disabled>照片風格</option>
+                  <option>正確</option>
+                  <option>待修正</option>
+                </select>
+              </td>
+              <td>
+                <button type="button" class="btn btn-success">儲存</button>
+              </td>
+            </tr> -->
+              </tbody>
+            </table>
+            <div class="row">
+              <div class="col-md-4">
+                <!-- <button
+                  type="button"
+                  class="btn btn-warning"
+                  data-toggle="modal"
+                  data-target="#definition"
+                >
+                  定義描述＋
+                </button> -->
+              </div>
+              <div class="col-md-4 text-center 
+              picture_total">
+                <div class="picture_total_page"></div>
+              </div>
+              <div class="col-md-4 text-right">
+                <button
+                  id="picture_prePage"
+                  type="button"
+                  class="btn btn-primary"
+                >
+                  上一頁
+                </button>
+                <button
+                  id="picture_nextPage"
+                  type="button"
+                  class="btn btn-primary"
+                >
+                  下一頁
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- 圖片校正 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
           <!-- 品牌校正 -->
           <div class="col-sm-12" v-show="link == 'brand'">
             <table class=" rwd-table table table-borderless center">
@@ -1363,14 +1609,14 @@
     <script src="js/ekko-lightbox.min.js"></script>
     <script src="js/login.js"></script>
     <script src="js/character.js"></script>
-    <script src="js/color.js"></script>
+    <script src="js/picture.js"></script>
     <script src="js/brand.js"></script>
 
     <script>
       var app = new Vue({
         el: "#app",
         data: {
-          link: "character",
+          link: "picture",
           definition: "person",
           gender: "male_female",
           photo_definition: "photo"
