@@ -621,8 +621,9 @@
                   定義描述＋
                 </button>
               </div>
-              <div class="col-md-4 text-center total">
-                <div class="total_page"></div>
+              <div class="col-md-4 text-center ">
+                <div class="total"></div>
+                <select id="total_page"></select>
               </div>
               <div class="col-md-4 text-right">
                 <button
@@ -1339,9 +1340,10 @@
                   定義描述＋
                 </button> -->
               </div>
-              <div class="col-md-4 text-center 
-              picture_total">
-                <div class="picture_total_page"></div>
+              <div class="col-md-4 text-center">
+                <div class="picture_total"></div>
+                <select id="picture_total_page"></select>
+
               </div>
               <div class="col-md-4 text-right">
                 <button
@@ -1616,7 +1618,7 @@
       var app = new Vue({
         el: "#app",
         data: {
-          link: "picture",
+          link: "character",
           definition: "person",
           gender: "male_female",
           photo_definition: "photo"

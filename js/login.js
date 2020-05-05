@@ -75,7 +75,7 @@ $(document).ready(function () {
                             console.log("登入失敗，請重新登入");
                             
                             console.log(xhr)
-                            // window.location.href = "login.html";
+                            window.location.href = "login.html";
                       
                           },
                           success: function (xhr) {

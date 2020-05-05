@@ -10,6 +10,7 @@ $(document).ready(function () {
     var LS = life_style();
     var CS = character_style();
 
+    
 
     $('#characterTime').empty().append('時間區間：' + local_character_start_date + ' ~ ' + local_character_end_time)
 
@@ -474,7 +475,7 @@ $(document).ready(function () {
             window.location.reload();
         }
         //以辨識的資料->換頁
-        if (local_modify_status == true) {
+        if (local_modify_status == true && Number(character_page_num)>1) {
             //按一下+1去下一頁
             localStorage.setItem('character_page_num', Number(character_page_num) - 1)
 

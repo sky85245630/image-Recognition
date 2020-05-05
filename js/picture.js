@@ -7,7 +7,10 @@ $(document).ready(function(){
     var local_picture_modify_status = localStorage.getItem('picture_modify_status') == "true" ? true : false
 
     var GP = get_picstyle();
- 
+    
+
+    
+
     $('#pictureTime').empty().append('時間區間：' + local_picture_start_date + ' ~ ' + local_picture_end_time)
 
 
@@ -46,7 +49,7 @@ $(document).ready(function(){
     //picture_selected_page
     function picture_selected_page(){
         $.ajax({
-            url: ip + "/img-recognition/style_recongition",
+            url: ip + "/img-recognition/picture_recongition",
             type: "POST",
             headers: {
                 Authorization: "Bearer " + jwt
@@ -89,7 +92,7 @@ $(document).ready(function(){
     //拉出local Storage資料顯示在畫面上PICTURE
 
     //判斷是辨識過或未辨識過的資料
-    var check_picture_recognition = local_picture_modify_status == "true" ? character_page_num:1;
+    var check_picture_recognition = local_picture_modify_status == "true" ? picture_page_num:1;
 
 
     var picture_storage = JSON.stringify({
@@ -117,15 +120,13 @@ $(document).ready(function(){
             console.log("PICTURE Local Storage取得成功");
             // console.log(data.character_style[1]);
             console.log(data);
-            total = '<p >第 '+data.num_of_data+' / ' + data.count + '</p>';
-            console.log(total);
+            picture_total = '<p >第 '+data.num_of_data+' / ' + data.count + '</p>';
             
-            $('.total').append(total);
+            $('.picture_total').append(picture_total);
             if (local_picture_modify_status == false) {
                 // window.location.reload();
                 $('#picture_prePage').hide();
                 $('#picture_total_page').hide();
-
             }
             for (i = 0; i < data.data.length; i++) {
                 picture ="<tr> <td>" +
@@ -136,11 +137,13 @@ $(document).ready(function(){
                 data.data[i].pic_url +
                 '" class="img-fluid rounded" style="max-width: 200px;"/> </a> </td><td class="recognition_result"> 人物風格：' +
                 data.data[i].picture_style +
-                '<br/> </td><td> <select id="character_style" class="btn btn-mini result_btn"> <option selected disabled>' +
+                '<br/> </td><td> <select id="picture_style" class="btn btn-mini result_btn"> <option selected disabled>' +
                 data.data[i].picture_style +
                 "</option>" +
                 GP +
-                ' </select ></td><td> <button id="picture_save" type="button" class="btn btn-success btn-picture">儲存</button> </td></tr>';
+                ' </select ><input id="picture_pic_id" type="hidden" value="' +
+                data.data[i].pic_id +
+                '"></td><td> <button id="picture_save" type="button" class="btn btn-success btn-picture">儲存</button> </td></tr>';
 
 
 
@@ -157,37 +160,6 @@ $(document).ready(function(){
     });
 
     //結束拉出local Storage資料顯示在畫面上PICTURE
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -228,7 +200,7 @@ $(document).ready(function(){
             },
             success: function (data) {
                 console.log("傳送圖片校正時間區間成功OOOOO");
-                total = '<p >第 '+data.num_of_data+' / ' + data.count + '</p>';
+                picture_total = '<p >第 '+data.num_of_data+' / ' + data.count + '</p>';
                 console.log(total);
                 localStorage.setItem("picture_start_date", picture_start_date);
                 localStorage.setItem("picture_end_time", picture_end_time);
@@ -244,7 +216,7 @@ $(document).ready(function(){
                 // console.log(data.data[0].kol_id);
                 $("#picture").empty();
                 $(".picture_total").empty();
-                $('.picture_total').append(total);
+                $('.picture_total').append(picture_total);
 
                 for (i = 0; i < data.data.length; i++) {
                     picture =
@@ -256,11 +228,13 @@ $(document).ready(function(){
                         data.data[i].pic_url +
                         '" class="img-fluid rounded" style="max-width: 200px;"/> </a> </td><td class="recognition_result"> 人物風格：' +
                         data.data[i].picture_style +
-                        '<br/> </td><td> <select id="character_style" class="btn btn-mini result_btn"> <option selected disabled>' +
+                        '<br/> </td><td> <select id="picture_style" class="btn btn-mini result_btn"> <option selected disabled>' +
                         data.data[i].picture_style +
                         "</option>" +
                         GP +
-                        ' </select ></td><td> <button id="picture_save" type="button" class="btn btn-success btn-picture">儲存</button> </td></tr>';
+                        ' </select ><input id="picture_pic_id" type="hidden" value="' +
+                        data.data[i].pic_id +
+                        '"></td><td> <button id="picture_save" type="button" class="btn btn-success btn-picture">儲存</button> </td></tr>';
 
 
                     $("#picture").append(picture);
@@ -290,6 +264,142 @@ $(document).ready(function(){
 
 
 
+     
+    //儲存圖片辨識資料
+    function save_picture(){
+        $(".btn-picture").click(function () {
+
+            var picture_style = $(this).parent().parent().find('#picture_style option:selected').val();
+            var picture_pic_id = $(this).parent().parent().find('#picture_pic_id').val();
+            var modify_person = localStorage.getItem('userName');
+    
+            console.log(JSON.stringify({
+                imageid: picture_pic_id,
+                picstyle: picture_style,
+                modify_person: modify_person
+            }));
+            var data = JSON.stringify({
+                imageid: picture_pic_id,
+                picstyle: picture_style,
+                modify_person: modify_person
+            })
+            console.log(data);
+            $.ajax({
+                url: ip + "/img-recognition/picstyle_modify",
+                type: "POST",
+                headers: {
+                    Authorization: "Bearer " + jwt
+                },
+                data: data,
+                contentType: "application/json; charset=utf-8",
+                error: function (xhr) {
+                    console.log("儲存圖片辨識結果失敗");
+                    console.log(xhr);
+                },
+                success: function (data) {
+                    console.log("儲存圖片辨識結果成功");
+                    // console.log(data.character_style[1]);
+                    console.log(data);
+                    alert('修改成功')
+                }
+            });
+    
+        });
+    }
+    //end儲存人物辨識資料
+
+
+
+
+
+
+    //圖片辨識下一頁
+    $('#picture_nextPage').click(function () {
+        // window.location.reload();
+        var local_picture_modify_status = localStorage.getItem('picture_modify_status') == "true" ? true : false
+        // console.log(typeof (page_num))
+        var picture_page_num = localStorage.getItem('picture_page_num')
+
+        //為辨識的資料reload()
+        if (local_picture_modify_status == false) {
+            window.location.reload();
+        }
+        //以辨識的資料->換頁
+        if (local_picture_modify_status == true) {
+            //按一下+1去下一頁
+            localStorage.setItem('picture_page_num', Number(picture_page_num) + 1)
+
+
+            //拉出local Storage資料顯示在畫面上PICTURE
+
+            var pictur_storage = JSON.stringify({
+                start_date: local_picture_start_date,
+                end_date: local_picture_end_time,
+                modify_status: local_picture_modify_status,
+                page_num: Number(picture_page_num)+1
+            });
+            // console.log(storage)
+            
+            $.ajax({
+                url: ip + "/img-recognition/picture_recongition",
+                type: "POST",
+                headers: {
+                    Authorization: "Bearer " + jwt
+                },
+                data: pictur_storage,
+                contentType: "application/json; charset=utf-8",
+                error: function (xhr) {
+                    console.log("PICTURE Local Storage下一頁尚無資料");
+                    console.log(xhr);
+                    // window.location.reload();
+                },
+                success: function (data) {
+
+                    console.log("PICTURE Local Storage下一頁取得成功");
+                    // console.log(data.character_style[1]);
+                    
+                    picture_total = '<p >第 ' + data.num_of_data + ' / ' + data.count + '</p>';
+                    
+                    
+                    $('.picture_total').empty().append(picture_total);
+                    console.log(data.data.length)
+                    $("#picture").empty()
+                    for (i = 0; i < data.data.length; i++) {
+                        picture =
+                        "<tr> <td>" +
+                        data.data[i].kol_name +
+                        '</td><td> <a href="' +
+                        data.data[i].pic_url +
+                        '" data-toggle="lightbox"> <img src="' +
+                        data.data[i].pic_url +
+                        '" class="img-fluid rounded" style="max-width: 200px;"/> </a> </td><td class="recognition_result"> 人物風格：' +
+                        data.data[i].picture_style +
+                        '<br/> </td><td> <select id="picture_style" class="btn btn-mini result_btn"> <option selected disabled>' +
+                        data.data[i].picture_style +
+                        "</option>" +
+                        GP +
+                        ' </select ><input id="picture_pic_id" type="hidden" value="' +
+                        data.data[i].pic_id +
+                        '"></td><td> <button id="picture_save" type="button" class="btn btn-success btn-picture">儲存</button> </td></tr>';
+
+
+                        $("#picture").append(picture);
+
+                    }
+
+                    $('#pictureTime').empty().append('時間區間：' + local_picture_start_date + ' ~ ' + local_picture_end_time)
+
+                    picture_selected_page();
+                    save_picture();
+
+
+                    // $('#set_character_data').modal('hide');
+                }
+            });
+
+            //結束拉出local Storage資料顯示在畫面上picture
+        }
+    })
 
 
 
@@ -298,36 +408,92 @@ $(document).ready(function(){
 
 
 
+    //圖片辨識上一頁
+    $('#picture_prePage').click(function () {
+        var local_picture_modify_status = localStorage.getItem('picture_modify_status') == "true" ? true : false
+        var picture_page_num = localStorage.getItem('picture_page_num')
+
+        //為辨識的資料reload()
+        if (local_picture_modify_status == false) {
+            window.location.reload();
+        }
+        //以辨識的資料->換頁
+        if (local_picture_modify_status == true && Number(picture_page_num)>1) {
+            
+            //按一下-1去上一頁
+            localStorage.setItem('picture_page_num', Number(picture_page_num) - 1)
 
 
+            //拉出local Storage資料顯示在畫面上PICTURE
+
+            var pictur_storage = JSON.stringify({
+                start_date: local_picture_start_date,
+                end_date: local_picture_end_time,
+                modify_status: local_picture_modify_status,
+                page_num: Number(picture_page_num)-1
+            });
+            console.log(pictur_storage)
+            
+            $.ajax({
+                url: ip + "/img-recognition/picture_recongition",
+                type: "POST",
+                headers: {
+                    Authorization: "Bearer " + jwt
+                },
+                data: pictur_storage,
+                contentType: "application/json; charset=utf-8",
+                error: function (xhr) {
+                    console.log("PICTURE Local Storage上一頁尚無資料");
+                    console.log(xhr);
+                    // window.location.reload();
+                },
+                success: function (data) {
+
+                    console.log("PICTURE Local Storage上一頁取得成功");
+                    // console.log(data.character_style[1]);
+                    
+                    picture_total = '<p >第 ' + data.num_of_data + ' / ' + data.count + '</p>';
+                    
+                    
+                    $('.picture_total').empty().append(picture_total);
+                    console.log(data.data.length)
+                    $("#picture").empty()
+                    for (i = 0; i < data.data.length; i++) {
+                        picture =
+                        "<tr> <td>" +
+                        data.data[i].kol_name +
+                        '</td><td> <a href="' +
+                        data.data[i].pic_url +
+                        '" data-toggle="lightbox"> <img src="' +
+                        data.data[i].pic_url +
+                        '" class="img-fluid rounded" style="max-width: 200px;"/> </a> </td><td class="recognition_result"> 人物風格：' +
+                        data.data[i].picture_style +
+                        '<br/> </td><td> <select id="picture_style" class="btn btn-mini result_btn"> <option selected disabled>' +
+                        data.data[i].picture_style +
+                        "</option>" +
+                        GP +
+                        ' </select ><input id="picture_pic_id" type="hidden" value="' +
+                        data.data[i].pic_id +
+                        '"></td><td> <button id="picture_save" type="button" class="btn btn-success btn-picture">儲存</button> </td></tr>';
 
 
+                        $("#picture").append(picture);
+
+                    }
+
+                    $('#pictureTime').empty().append('時間區間：' + local_picture_start_date + ' ~ ' + local_picture_end_time)
+
+                    picture_selected_page();
+                    save_picture();
 
 
+                    // $('#set_character_data').modal('hide');
+                }
+            });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            //結束拉出local Storage資料顯示在畫面上picture
+        }
+    })
 
 
 
@@ -336,6 +502,76 @@ $(document).ready(function(){
 
 
     
+
+
+
+    
+    //total_page change
+    $('#picture_total_page').change(function(){
+        var selected_page = $('#picture_total_page :selected').val();
+        localStorage.setItem('picture_page_num',selected_page)
+
+        var storage = JSON.stringify({
+            start_date: local_picture_start_date,
+            end_date: local_picture_end_time,
+            modify_status: local_picture_modify_status,
+            page_num: Number(selected_page)
+        });
+        
+        $.ajax({
+            url: ip + "/img-recognition/picture_recongition",
+            type: "POST",
+            headers: {
+                Authorization: "Bearer " + jwt
+            },
+            data: storage,
+            contentType: "application/json; charset=utf-8",
+            error: function (xhr) {
+                console.log("total_page change取得失敗");
+                console.log(xhr);
+                // window.location.reload();
+            },
+            success: function (data) {
+
+                console.log("total_page change取得成功");
+                picture_total = '<p >第 ' + data.num_of_data + ' / ' + data.count + '</p>';
+                $('.picture_total').empty().append(picture_total);
+                $("#picture").empty()
+
+
+                for (i = 0; i < data.data.length; i++) {
+                    picture =
+                    "<tr> <td>" +
+                    data.data[i].kol_name +
+                    '</td><td> <a href="' +
+                    data.data[i].pic_url +
+                    '" data-toggle="lightbox"> <img src="' +
+                    data.data[i].pic_url +
+                    '" class="img-fluid rounded" style="max-width: 200px;"/> </a> </td><td class="recognition_result"> 人物風格：' +
+                    data.data[i].picture_style +
+                    '<br/> </td><td> <select id="picture_style" class="btn btn-mini result_btn"> <option selected disabled>' +
+                    data.data[i].picture_style +
+                    "</option>" +
+                    GP +
+                    ' </select ><input id="picture_pic_id" type="hidden" value="' +
+                    data.data[i].pic_id +
+                    '"></td><td> <button id="picture_save" type="button" class="btn btn-success btn-picture">儲存</button> </td></tr>';
+
+
+                    $("#picture").append(picture);
+
+                }
+
+                $('#pictureTime').empty().append('時間區間：' + local_picture_start_date + ' ~ ' + local_picture_end_time)
+
+                save_picture();
+
+
+                // $('#set_character_data').modal('hide');
+            }
+        });
+    })
+
 
 
 
