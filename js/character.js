@@ -7,7 +7,7 @@ $(document).ready(function () {
     var local_modify_status = localStorage.getItem('modify_status') == "true" ? true : false
 
     var ip = "http://api.i-buzz-system.com";
-    var LS = life_style();
+    // var LS = life_style();
     var CS = character_style();
 
     
@@ -24,9 +24,6 @@ $(document).ready(function () {
             headers: {
                 Authorization: "Bearer " + jwt
             },
-            // cache: false,
-            async: true,
-
             error: function (xhr) {
                 console.log("取得生活風格列表失敗");
                 console.log(xhr)
@@ -36,10 +33,9 @@ $(document).ready(function () {
             success: function (data) {
                 console.log("取得生活風格列表成功");
                 for (i = 0; i < data.lifestyle_list.length; i++) {
-                    LS += '<option name="' + data.lifestyle_list[i] + '" value="' + data.lifestyle_list[i] + '">' + data.lifestyle_list[i] + '</option>'
+                    LS = '<option name="' + data.lifestyle_list[i] + '" value="' + data.lifestyle_list[i] + '">' + data.lifestyle_list[i] + '</option>'
+                    $('.life_style').append(LS)
                 }
-                return LS;
-
             }
         })
 
@@ -68,13 +64,9 @@ $(document).ready(function () {
                 console.log("取得人物風格列表成功");
                 console.log(data.characterstyle_list)
                 for (i = 0; i < data.characterstyle_list.length; i++) {
-                    CS += '<option name="' + data.characterstyle_list[i] + '" value="' + data.characterstyle_list[i] + '">' + data.characterstyle_list[i] + '</option>';
-
-                    //   console.log(data.character_style[i])
-                    //   console.log( character )
+                    CS = '<option name="' + data.characterstyle_list[i] + '" value="' + data.characterstyle_list[i] + '">' + data.characterstyle_list[i] + '</option>';
+                    $('.character_style').append(CS)
                 }
-                return CS;
-
             }
 
         })
@@ -218,19 +210,18 @@ $(document).ready(function () {
                     data.data[i].lifestyle +
                     "<br/> 性別：" +
                     data.data[i].gender +
-                    '<br/> </td><td> <select id="character_style" class="btn btn-mini result_btn"> <option selected disabled>' +
+                    '<br/> </td><td> <select id="character_style" class="btn btn-mini result_btn character_style"> <option selected disabled>' +
                     data.data[i].character +
-                    '</option>' + CS + ' </select ><br/> <select id="life_style" class="btn btn-mini result_btn"> <option selected disabled>' +
+                    '</option>' + CS + ' </select ><br/> <select id="life_style" class="btn btn-mini result_btn life_style"> <option selected disabled>' +
                     data.data[i].lifestyle +
-                    "</option>" +
-                    LS +
-                    ' </select ><br/> <select id="character_gender" class="btn btn-mini result_btn"> <option selected disabled>' +
+                    '</option>"</select ><br/> <select id="character_gender" class="btn btn-mini result_btn"> <option selected disabled>' +
                     data.data[i].gender +
                     '</option ><option name="male" value="male">male</option ><option name="female" value="female">female</option><option name="無辨識結果" value="無辨識結果">無辨識結果</option> </select ><input id="pic_id" type="hidden" value="' + data.data[i].pic_id + '"><br/> </td><td> <button id="character_save" type="button" class="btn btn-success btn-character">儲存</button> </td></tr>';
 
 
 
                 $("#character").append(character);
+                
                 //   console.log(data.character_style[i])
                 //   console.log( character )
 
@@ -239,8 +230,8 @@ $(document).ready(function () {
             $('#characterTime').empty().append('時間區間：' + local_character_start_date + ' ~ ' + local_character_end_time)
             selected_page();
             save_character();
-            
-
+            life_style() 
+            character_style()
             // $('#set_character_data').modal('hide');
         }
     });
@@ -316,11 +307,11 @@ $(document).ready(function () {
                         data.data[i].lifestyle +
                         "<br/> 性別：" +
                         data.data[i].gender +
-                        '<br/> </td><td> <select id="character_style" class="btn btn-mini result_btn"> <option selected disabled>' +
+                        '<br/> </td><td> <select id="character_style" class="btn btn-mini result_btn character_style"> <option selected disabled>' +
                         data.data[i].character +
                         "</option>" +
                         CS +
-                        ' </select ><br/> <select id="life_style" class="btn btn-mini result_btn"> <option selected disabled>' +
+                        ' </select ><br/> <select id="life_style" class="btn btn-mini result_btn life_style"> <option selected disabled>' +
                         data.data[i].lifestyle +
                         "</option>" +
                         LS +
@@ -339,6 +330,8 @@ $(document).ready(function () {
                 $('#characterTime').empty().append('時間區間：' + local_character_start_date + ' ~ ' + local_character_end_time)
                 selected_page();
                 save_character();
+                life_style() 
+                character_style()
                 window.location.reload();
 
                 $("#set_character_data").modal("toggle");
@@ -430,9 +423,9 @@ $(document).ready(function () {
                             data.data[i].lifestyle +
                             "<br/> 性別：" +
                             data.data[i].gender +
-                            '<br/> </td><td> <select id="character_style" class="btn btn-mini result_btn"> <option selected disabled>' +
+                            '<br/> </td><td> <select id="character_style" class="btn btn-mini result_btn character_style"> <option selected disabled>' +
                             data.data[i].character +
-                            '</option>' + CS + ' </select ><br/> <select id="life_style" class="btn btn-mini result_btn"> <option selected disabled>' +
+                            '</option>' + CS + ' </select ><br/> <select id="life_style" class="btn btn-mini result_btn life_style"> <option selected disabled>' +
                             data.data[i].lifestyle +
                             "</option>" +
                             LS +
@@ -529,9 +522,9 @@ $(document).ready(function () {
                             data.data[i].lifestyle +
                             "<br/> 性別：" +
                             data.data[i].gender +
-                            '<br/> </td><td> <select id="character_style" class="btn btn-mini result_btn"> <option selected disabled>' +
+                            '<br/> </td><td> <select id="character_style" class="btn btn-mini result_btn character_style"> <option selected disabled>' +
                             data.data[i].character +
-                            '</option>' + CS + ' </select ><br/> <select id="life_style" class="btn btn-mini result_btn"> <option selected disabled>' +
+                            '</option>' + CS + ' </select ><br/> <select id="life_style" class="btn btn-mini result_btn life_style"> <option selected disabled>' +
                             data.data[i].lifestyle +
                             "</option>" +
                             LS +
@@ -616,9 +609,9 @@ $(document).ready(function () {
                         data.data[i].lifestyle +
                         "<br/> 性別：" +
                         data.data[i].gender +
-                        '<br/> </td><td> <select id="character_style" class="btn btn-mini result_btn"> <option selected disabled>' +
+                        '<br/> </td><td> <select id="character_style" class="btn btn-mini result_btn character_style"> <option selected disabled>' +
                         data.data[i].character +
-                        '</option>' + CS + ' </select ><br/> <select id="life_style" class="btn btn-mini result_btn"> <option selected disabled>' +
+                        '</option>' + CS + ' </select ><br/> <select id="life_style" class="btn btn-mini result_btn life_style"> <option selected disabled>' +
                         data.data[i].lifestyle +
                         "</option>" +
                         LS +
