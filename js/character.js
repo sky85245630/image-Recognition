@@ -8,7 +8,7 @@ $(document).ready(function () {
 
     var ip = "http://api.i-buzz-system.com";
     // var LS = life_style();
-    var CS = character_style();
+    // var CS = character_style();
 
     
 
@@ -212,7 +212,7 @@ $(document).ready(function () {
                     data.data[i].gender +
                     '<br/> </td><td> <select id="character_style" class="btn btn-mini result_btn character_style"> <option selected disabled>' +
                     data.data[i].character +
-                    '</option>' + CS + ' </select ><br/> <select id="life_style" class="btn btn-mini result_btn life_style"> <option selected disabled>' +
+                    '</option></select ><br/> <select id="life_style" class="btn btn-mini result_btn life_style"> <option selected disabled>' +
                     data.data[i].lifestyle +
                     '</option>"</select ><br/> <select id="character_gender" class="btn btn-mini result_btn"> <option selected disabled>' +
                     data.data[i].gender +
@@ -230,8 +230,8 @@ $(document).ready(function () {
             $('#characterTime').empty().append('時間區間：' + local_character_start_date + ' ~ ' + local_character_end_time)
             selected_page();
             save_character();
-            life_style() 
-            character_style()
+            life_style();
+            character_style();
             // $('#set_character_data').modal('hide');
         }
     });
@@ -295,31 +295,25 @@ $(document).ready(function () {
 
                 for (i = 0; i < data.data.length; i++) {
                     character =
-                        "<tr> <td>" +
-                        data.data[i].kol_name +
-                        '</td><td> <a href="' +
-                        data.data[i].pic_url +
-                        '" data-toggle="lightbox"> <img src="' +
-                        data.data[i].pic_url +
-                        '" class="img-fluid rounded" style="max-width: 200px;"/> </a> </td><td class="recognition_result"> 人物風格：' +
-                        data.data[i].character +
-                        "<br/> 生活風格：" +
-                        data.data[i].lifestyle +
-                        "<br/> 性別：" +
-                        data.data[i].gender +
-                        '<br/> </td><td> <select id="character_style" class="btn btn-mini result_btn character_style"> <option selected disabled>' +
-                        data.data[i].character +
-                        "</option>" +
-                        CS +
-                        ' </select ><br/> <select id="life_style" class="btn btn-mini result_btn life_style"> <option selected disabled>' +
-                        data.data[i].lifestyle +
-                        "</option>" +
-                        LS +
-                        ' </select ><br/> <select id="character_gender" class="btn btn-mini result_btn"> <option selected disabled>' +
-                        data.data[i].gender +
-                        '</option ><option name="male" value="male">male</option ><option name="female" value="female">female</option><option name="無辨識結果" value="無辨識結果">無辨識結果</option> </select ><input id="pic_id" type="hidden" value="' +
-                        data.data[i].pic_id +
-                        '"><br/> </td><td> <button id="character_save" type="button" class="btn btn-success btn-character">儲存</button> </td></tr>';
+                    "<tr> <td>" +
+                    data.data[i].kol_name +
+                    '</td><td> <a href="' +
+                    data.data[i].pic_url +
+                    '" data-toggle="lightbox"> <img src="' +
+                    data.data[i].pic_url +
+                    '" class="img-fluid rounded" style="max-width: 200px;"/> </a> </td><td class="recognition_result"> 人物風格：' +
+                    data.data[i].character +
+                    "<br/> 生活風格：" +
+                    data.data[i].lifestyle +
+                    "<br/> 性別：" +
+                    data.data[i].gender +
+                    '<br/> </td><td> <select id="character_style" class="btn btn-mini result_btn character_style"> <option selected disabled>' +
+                    data.data[i].character +
+                    '</option></select ><br/> <select id="life_style" class="btn btn-mini result_btn life_style"> <option selected disabled>' +
+                    data.data[i].lifestyle +
+                    '</option>"</select ><br/> <select id="character_gender" class="btn btn-mini result_btn"> <option selected disabled>' +
+                    data.data[i].gender +
+                    '</option ><option name="male" value="male">male</option ><option name="female" value="female">female</option><option name="無辨識結果" value="無辨識結果">無辨識結果</option> </select ><input id="pic_id" type="hidden" value="' + data.data[i].pic_id + '"><br/> </td><td> <button id="character_save" type="button" class="btn btn-success btn-character">儲存</button> </td></tr>';
 
 
                     $("#character").append(character);
@@ -332,6 +326,7 @@ $(document).ready(function () {
                 save_character();
                 life_style() 
                 character_style()
+                //不知道當時怎麼這樣寫....？
                 window.location.reload();
 
                 $("#set_character_data").modal("toggle");
@@ -411,27 +406,25 @@ $(document).ready(function () {
                     $("#character").empty()
                     for (i = 0; i < data.data.length; i++) {
                         character =
-                            "<tr> <td>" +
-                            data.data[i].kol_name +
-                            '</td><td> <a href="' +
-                            data.data[i].pic_url +
-                            '" data-toggle="lightbox"> <img src="' +
-                            data.data[i].pic_url +
-                            '" class="img-fluid rounded" style="max-width: 200px;"/> </a> </td><td class="recognition_result"> 人物風格：' +
-                            data.data[i].character +
-                            "<br/> 生活風格：" +
-                            data.data[i].lifestyle +
-                            "<br/> 性別：" +
-                            data.data[i].gender +
-                            '<br/> </td><td> <select id="character_style" class="btn btn-mini result_btn character_style"> <option selected disabled>' +
-                            data.data[i].character +
-                            '</option>' + CS + ' </select ><br/> <select id="life_style" class="btn btn-mini result_btn life_style"> <option selected disabled>' +
-                            data.data[i].lifestyle +
-                            "</option>" +
-                            LS +
-                            ' </select ><br/> <select id="character_gender" class="btn btn-mini result_btn"> <option selected disabled>' +
-                            data.data[i].gender +
-                            '</option ><option name="male" value="male">male</option ><option name="female" value="female">female</option><option name="無辨識結果" value="無辨識結果">無辨識結果</option> </select ><input id="pic_id" type="hidden" value="' + data.data[i].pic_id + '"><br/> </td><td> <button id="character_save" type="button" class="btn btn-success btn-character">儲存</button> </td></tr>';
+                    "<tr> <td>" +
+                    data.data[i].kol_name +
+                    '</td><td> <a href="' +
+                    data.data[i].pic_url +
+                    '" data-toggle="lightbox"> <img src="' +
+                    data.data[i].pic_url +
+                    '" class="img-fluid rounded" style="max-width: 200px;"/> </a> </td><td class="recognition_result"> 人物風格：' +
+                    data.data[i].character +
+                    "<br/> 生活風格：" +
+                    data.data[i].lifestyle +
+                    "<br/> 性別：" +
+                    data.data[i].gender +
+                    '<br/> </td><td> <select id="character_style" class="btn btn-mini result_btn character_style"> <option selected disabled>' +
+                    data.data[i].character +
+                    '</option></select ><br/> <select id="life_style" class="btn btn-mini result_btn life_style"> <option selected disabled>' +
+                    data.data[i].lifestyle +
+                    '</option>"</select ><br/> <select id="character_gender" class="btn btn-mini result_btn"> <option selected disabled>' +
+                    data.data[i].gender +
+                    '</option ><option name="male" value="male">male</option ><option name="female" value="female">female</option><option name="無辨識結果" value="無辨識結果">無辨識結果</option> </select ><input id="pic_id" type="hidden" value="' + data.data[i].pic_id + '"><br/> </td><td> <button id="character_save" type="button" class="btn btn-success btn-character">儲存</button> </td></tr>';
 
 
 
@@ -446,6 +439,8 @@ $(document).ready(function () {
 
                     selected_page();
                     save_character();
+                    life_style();
+                    character_style();
 
 
                     // $('#set_character_data').modal('hide');
@@ -510,27 +505,25 @@ $(document).ready(function () {
                     $("#character").empty()
                     for (i = 0; i < data.data.length; i++) {
                         character =
-                            "<tr> <td>" +
-                            data.data[i].kol_name +
-                            '</td><td> <a href="' +
-                            data.data[i].pic_url +
-                            '" data-toggle="lightbox"> <img src="' +
-                            data.data[i].pic_url +
-                            '" class="img-fluid rounded" style="max-width: 200px;"/> </a> </td><td class="recognition_result"> 人物風格：' +
-                            data.data[i].character +
-                            "<br/> 生活風格：" +
-                            data.data[i].lifestyle +
-                            "<br/> 性別：" +
-                            data.data[i].gender +
-                            '<br/> </td><td> <select id="character_style" class="btn btn-mini result_btn character_style"> <option selected disabled>' +
-                            data.data[i].character +
-                            '</option>' + CS + ' </select ><br/> <select id="life_style" class="btn btn-mini result_btn life_style"> <option selected disabled>' +
-                            data.data[i].lifestyle +
-                            "</option>" +
-                            LS +
-                            ' </select ><br/> <select id="character_gender" class="btn btn-mini result_btn"> <option selected disabled>' +
-                            data.data[i].gender +
-                            '</option ><option name="male" value="male">male</option ><option name="female" value="female">female</option><option name="無辨識結果" value="無辨識結果">無辨識結果</option> </select ><input id="pic_id" type="hidden" value="' + data.data[i].pic_id + '"><br/> </td><td> <button id="character_save" type="button" class="btn btn-success btn-character">儲存</button> </td></tr>';
+                    "<tr> <td>" +
+                    data.data[i].kol_name +
+                    '</td><td> <a href="' +
+                    data.data[i].pic_url +
+                    '" data-toggle="lightbox"> <img src="' +
+                    data.data[i].pic_url +
+                    '" class="img-fluid rounded" style="max-width: 200px;"/> </a> </td><td class="recognition_result"> 人物風格：' +
+                    data.data[i].character +
+                    "<br/> 生活風格：" +
+                    data.data[i].lifestyle +
+                    "<br/> 性別：" +
+                    data.data[i].gender +
+                    '<br/> </td><td> <select id="character_style" class="btn btn-mini result_btn character_style"> <option selected disabled>' +
+                    data.data[i].character +
+                    '</option></select ><br/> <select id="life_style" class="btn btn-mini result_btn life_style"> <option selected disabled>' +
+                    data.data[i].lifestyle +
+                    '</option>"</select ><br/> <select id="character_gender" class="btn btn-mini result_btn"> <option selected disabled>' +
+                    data.data[i].gender +
+                    '</option ><option name="male" value="male">male</option ><option name="female" value="female">female</option><option name="無辨識結果" value="無辨識結果">無辨識結果</option> </select ><input id="pic_id" type="hidden" value="' + data.data[i].pic_id + '"><br/> </td><td> <button id="character_save" type="button" class="btn btn-success btn-character">儲存</button> </td></tr>';
 
 
 
@@ -542,8 +535,10 @@ $(document).ready(function () {
                     }
                     $('#characterTime').empty().append('時間區間：' + local_character_start_date + ' ~ ' + local_character_end_time)
 
-
-                    save_character();
+            selected_page();
+            save_character();
+            life_style();
+            character_style();
 
 
                     // $('#set_character_data').modal('hide');
@@ -597,27 +592,25 @@ $(document).ready(function () {
                 $("#character").empty()
                 for (i = 0; i < data.data.length; i++) {
                     character =
-                        "<tr> <td>" +
-                        data.data[i].kol_name +
-                        '</td><td> <a href="' +
-                        data.data[i].pic_url +
-                        '" data-toggle="lightbox"> <img src="' +
-                        data.data[i].pic_url +
-                        '" class="img-fluid rounded" style="max-width: 200px;"/> </a> </td><td class="recognition_result"> 人物風格：' +
-                        data.data[i].character +
-                        "<br/> 生活風格：" +
-                        data.data[i].lifestyle +
-                        "<br/> 性別：" +
-                        data.data[i].gender +
-                        '<br/> </td><td> <select id="character_style" class="btn btn-mini result_btn character_style"> <option selected disabled>' +
-                        data.data[i].character +
-                        '</option>' + CS + ' </select ><br/> <select id="life_style" class="btn btn-mini result_btn life_style"> <option selected disabled>' +
-                        data.data[i].lifestyle +
-                        "</option>" +
-                        LS +
-                        ' </select ><br/> <select id="character_gender" class="btn btn-mini result_btn"> <option selected disabled>' +
-                        data.data[i].gender +
-                        '</option ><option name="male" value="male">male</option ><option name="female" value="female">female</option><option name="無辨識結果" value="無辨識結果">無辨識結果</option> </select ><input id="pic_id" type="hidden" value="' + data.data[i].pic_id + '"><br/> </td><td> <button id="character_save" type="button" class="btn btn-success btn-character">儲存</button> </td></tr>';
+                    "<tr> <td>" +
+                    data.data[i].kol_name +
+                    '</td><td> <a href="' +
+                    data.data[i].pic_url +
+                    '" data-toggle="lightbox"> <img src="' +
+                    data.data[i].pic_url +
+                    '" class="img-fluid rounded" style="max-width: 200px;"/> </a> </td><td class="recognition_result"> 人物風格：' +
+                    data.data[i].character +
+                    "<br/> 生活風格：" +
+                    data.data[i].lifestyle +
+                    "<br/> 性別：" +
+                    data.data[i].gender +
+                    '<br/> </td><td> <select id="character_style" class="btn btn-mini result_btn character_style"> <option selected disabled>' +
+                    data.data[i].character +
+                    '</option></select ><br/> <select id="life_style" class="btn btn-mini result_btn life_style"> <option selected disabled>' +
+                    data.data[i].lifestyle +
+                    '</option>"</select ><br/> <select id="character_gender" class="btn btn-mini result_btn"> <option selected disabled>' +
+                    data.data[i].gender +
+                    '</option ><option name="male" value="male">male</option ><option name="female" value="female">female</option><option name="無辨識結果" value="無辨識結果">無辨識結果</option> </select ><input id="pic_id" type="hidden" value="' + data.data[i].pic_id + '"><br/> </td><td> <button id="character_save" type="button" class="btn btn-success btn-character">儲存</button> </td></tr>';
 
 
 
@@ -630,9 +623,11 @@ $(document).ready(function () {
                 $('#characterTime').empty().append('時間區間：' + local_character_start_date + ' ~ ' + local_character_end_time)
 
 
+
+                selected_page();
                 save_character();
-
-
+                life_style();
+                character_style();
                 // $('#set_character_data').modal('hide');
             }
         });
