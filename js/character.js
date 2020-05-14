@@ -624,7 +624,6 @@ $(document).ready(function () {
 
 
 
-                selected_page();
                 save_character();
                 life_style();
                 character_style();
